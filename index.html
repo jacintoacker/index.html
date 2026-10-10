@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Hacker Student — Informática para estudantes angolanos</title>
+<style>
+:root{--bg:#181311;--panel:#231c19;--panel2:#2c2420;--line:#3d322c;--red:#ce1126;--gold:#f9c80e;--ink:#f1e9df;--mute:#aa9e93;--ok:#4cc38a;--bad:#ff6b6b;--r:10px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Segoe UI",Roboto,system-ui,sans-serif}
+h1,h2,h3{font-family:"Courier New",ui-monospace,Consolas,monospace;line-height:1.2;margin:0 0 .5em;letter-spacing:-.01em}
+h1{font-size:clamp(1.9rem,5.5vw,3rem)}
+h2{font-size:clamp(1.4rem,3.6vw,1.9rem)}
+h3{font-size:1.1rem}
+p{margin:0 0 .9em}
+a{color:var(--gold)}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.top{position:sticky;top:0;z-index:20;background:rgba(24,19,17,.96);border-bottom:2px solid var(--red);display:flex;align-items:center;gap:14px;padding:8px 14px;backdrop-filter:blur(6px)}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);font:700 1.05rem "Courier New",monospace;white-space:nowrap}
+.mark{background:var(--red);color:#fff;border-radius:6px;padding:2px 7px;font-weight:700}
+nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1}
+nav::-webkit-scrollbar{display:none}
+nav button{background:none;border:0;border-radius:8px;padding:8px 12px;cursor:pointer;color:var(--mute);white-space:nowrap}
+nav button:hover{color:var(--ink)}
+nav button[aria-current="page"]{background:var(--panel2);color:var(--gold);box-shadow:inset 0 -2px 0 var(--gold)}
+.wrap{max-width:1040px;margin:0 auto;padding:22px 16px 60px}
+.view{display:none}.view.active{display:block}
+.hero{display:grid;gap:26px;align-items:center;padding:18px 0 8px}
+@media(min-width:860px){.hero{grid-template-columns:1.05fr .95fr}}
+.hero p.lead{font-size:1.1rem;color:#d8cdc2;max-width:52ch}
+.term{background:#0f0b0a;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:0 0 0 3px rgba(206,17,38,.25)}
+.term .bar{background:var(--panel2);padding:7px 12px;font:.8rem "Courier New",monospace;color:var(--mute);display:flex;gap:6px;align-items:center}
+.term .bar i{width:10px;height:10px;border-radius:50%;background:var(--red);display:inline-block}
+.term .bar i:nth-child(2){background:var(--gold)}.term .bar i:nth-child(3){background:var(--ok)}
+.term pre{margin:0;padding:14px;min-height:190px;font:.88rem/1.6 "Courier New",monospace;color:#f6e7b8;white-space:pre-wrap;word-break:break-word}
+.btn{display:inline-block;background:var(--gold);color:#1b1408;border:0;border-radius:8px;padding:10px 18px;font-weight:700;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.08)}
+.btn.red{background:var(--red);color:#fff}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.small{padding:6px 12px;font-size:.9rem}
+.row-btns{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+.menu{display:grid;gap:10px;margin-top:22px}
+@media(min-width:760px){.menu{grid-template-columns:1fr 1fr}}
+.menu button{text-align:left;background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--red);border-radius:var(--r);padding:14px 16px;cursor:pointer}
+.menu button:hover{background:var(--panel2)}
+.menu b{display:block;font-family:"Courier New",monospace;color:var(--gold)}
+.menu span{color:var(--mute);font-size:.93rem}
+.prog{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;margin-top:18px}
+.meter{height:10px;border-radius:6px;background:var(--panel2);overflow:hidden;margin-top:8px}
+.meter>div{height:100%;background:linear-gradient(90deg,var(--red),var(--gold));width:0;transition:width .4s}
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0 18px}
+label{display:block;font-size:.88rem;color:var(--mute);margin-bottom:4px}
+input,select,textarea{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+input[type=checkbox]{width:auto}
+input[type=range]{padding:0}
+textarea{min-height:90px;resize:vertical}
+.grid2{display:grid;gap:12px}
+@media(min-width:700px){.grid2{grid-template-columns:1fr 1fr}.span2{grid-column:1/-1}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.lesson{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);margin-bottom:10px}
+.lesson summary{cursor:pointer;padding:12px 16px;display:flex;gap:10px;align-items:center;justify-content:space-between;list-style:none}
+.lesson summary::-webkit-details-marker{display:none}
+.lesson summary b{font-family:"Courier New",monospace}
+.tag{font-size:.8rem;color:var(--mute);display:block}
+.lesson .body{padding:4px 16px 16px;border-top:1px solid var(--line)}
+.lesson.done summary b::before{content:"✔ ";color:var(--ok)}
+.lesson pre,.body pre{background:#0f0b0a;border-left:3px solid var(--gold);padding:10px 12px;border-radius:6px;overflow-x:auto;font:.86rem/1.5 "Courier New",monospace;color:#f6e7b8}
+.body table{border-collapse:collapse;width:100%;font-size:.92rem;margin-bottom:12px}
+.body td,.body th{border:1px solid var(--line);padding:6px 8px;text-align:left}
+.body th{background:var(--panel2)}
+.note{background:var(--panel2);border-left:4px solid var(--gold);padding:10px 14px;border-radius:6px;font-size:.92rem;color:#d8cdc2;margin:12px 0}
+.err{color:var(--bad);font-weight:600;margin:8px 0}
+.hide{display:none!important}
+.qopt{display:block;width:100%;text-align:left;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:8px;cursor:pointer}
+.qopt:hover{border-color:var(--gold)}
+.qopt.ok{background:rgba(76,195,138,.18);border-color:var(--ok)}
+.qopt.bad{background:rgba(255,107,107,.15);border-color:var(--bad)}
+.why{background:var(--panel2);border-radius:8px;padding:10px 14px;margin:10px 0}
+.out{background:#0f0b0a;border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:1rem "Courier New",monospace;word-break:break-all;margin:8px 0;min-height:44px}
+.item{display:flex;gap:10px;align-items:center;justify-content:space-between;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-bottom:8px}
+.item.done span.t{text-decoration:line-through;color:var(--mute)}
+.late{color:var(--bad);font-size:.82rem}
+dl{margin:0}dt{font-family:"Courier New",monospace;color:var(--gold);font-weight:700;margin-top:12px}dd{margin:2px 0 0}
+footer{border-top:1px solid var(--line);color:var(--mute);text-align:center;padding:20px 14px;font-size:.9rem}
+/* Folha do trabalho */
+.sheet{background:#fff;color:#000;font-family:"Times New Roman",Times,serif;font-size:12pt;line-height:1.5;padding:26px 20px;border-radius:6px;max-width:820px;margin:16px auto 0}
+.sheet h2{font:700 13pt "Times New Roman",serif;text-transform:uppercase;margin:1.2em 0 .5em;letter-spacing:0}
+.sheet h3{font:700 12pt "Times New Roman",serif;margin:1em 0 .4em}
+.sheet p{text-align:justify;text-indent:1.25cm;margin:0 0 .6em}
+.sheet ul,.sheet ol{margin:0 0 .8em}
+.sheet table{border-collapse:collapse;width:100%;margin:.4em 0 1em}
+.sheet td,.sheet th{border:1px solid #000;padding:4px 6px;font-size:11pt;text-align:left;vertical-align:top}
+.sheet th{background:#e6e6e6}
+.sheet pre{font:10pt/1.4 "Courier New",monospace;background:#f1f1f1;border:1px solid #bbb;padding:8px;white-space:pre-wrap;color:#000}
+.sheet .centro{text-align:center}
+.sheet .noind{text-indent:0}
+.sheet .capa{text-align:center;padding-bottom:20px}
+.sheet .capa p{text-indent:0;text-align:center}
+.sheet .capa .c2{font-weight:700;font-size:14pt;margin-top:1.5em}
+.sheet .capa .c4{font-weight:700;font-size:15pt;margin:3.5em 0 .3em}
+.sheet .capa .c5{font-weight:700;font-size:14pt;margin-bottom:3em}
+.sheet .capa .info{text-align:left;margin:0 auto;max-width:420px}
+.sheet .capa .info p{text-align:left}
+.sheet .capa .c9{margin-top:3em}
+.sheet .idx p{text-indent:0;margin:0 0 .3em}
+.sheet .idx p.s{padding-left:1.2cm}
+.sheet .pg{page-break-after:always}
+@page{margin:2.5cm 2cm 2cm 3cm}
+@media print{
+ body{background:#fff}
+ .top,footer,.noprint,.view:not(#gerador){display:none!important}
+ .wrap{padding:0;max-width:none}
+ .sheet{border-radius:0;padding:0;margin:0;max-width:none}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#" data-go="inicio" aria-label="Hacker Student, início"><span class="mark" aria-hidden="true">&lt;/&gt;</span><span>Hacker Student</span></a>
+  <nav id="nav" aria-label="Secções do site">
+    <button data-go="inicio">Início</button>
+    <button data-go="aulas">Aulas</button>
+    <button data-go="gerador">Gerador</button>
+    <button data-go="quiz">Quiz</button>
+    <button data-go="ferramentas">Ferramentas</button>
+    <button data-go="glossario">Glossário</button>
+    <button data-go="agenda">Agenda</button>
+  </nav>
+</header>
+
+<main class="wrap">
+
+<!-- INÍCIO -->
+<section id="inicio" class="view active">
+  <div class="hero">
+    <div>
+      <h1>Informática para quem estuda em Angola</h1>
+      <p class="lead">Aulas da 10.ª classe ao ensino superior, quizzes, ferramentas de hacker ético e um gerador de trabalhos escolares organizado, com exemplos da realidade angolana.</p>
+      <div class="row-btns">
+        <button class="btn" data-go="gerador">Gerar um trabalho</button>
+        <button class="btn ghost" data-go="aulas">Começar a estudar</button>
+      </div>
+    </div>
+    <div class="term" aria-label="Exemplo do gerador a funcionar">
+      <div class="bar"><i></i><i></i><i></i><span style="margin-left:6px">hacker@student</span></div>
+      <pre id="term"></pre>
+    </div>
+  </div>
+
+  <div class="prog">
+    <b id="progTxt">0 de 0 aulas concluídas</b>
+    <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progBar"><div id="progFill"></div></div>
+  </div>
+
+  <div class="menu">
+    <button data-go="aulas"><b>Aulas</b><span><i id="nAulas">0</i> aulas com exemplos e código, filtradas por classe e disciplina.</span></button>
+    <button data-go="gerador"><b>Gerador de trabalhos</b><span>Capa, índice, introdução, desenvolvimento, conclusão e bibliografia.</span></button>
+    <button data-go="quiz"><b>Quiz</b><span><i id="nQuiz">0</i> perguntas com explicação de cada resposta.</span></button>
+    <button data-go="ferramentas"><b>Ferramentas</b><span>Conversor de bases, palavras-passe fortes e contador de palavras.</span></button>
+    <button data-go="glossario"><b>Glossário</b><span>Termos de informática explicados em português simples.</span></button>
+    <button data-go="agenda"><b>Agenda de estudo</b><span>Marca testes, trabalhos e entregas por disciplina.</span></button>
+  </div>
+</section>
+
+<!-- AULAS -->
+<section id="aulas" class="view">
+  <h2>Aulas</h2>
+  <p>Abre uma aula, lê, treina e marca como concluída.</p>
+  <div class="filters grid2">
+    <div><label for="fClasse">Classe</label>
+      <select id="fClasse"><option value="all">Todas</option><option value="10">10.ª classe</option><option value="11">11.ª classe</option><option value="12">12.ª classe</option><option value="13">13.ª classe</option><option value="S">Ensino superior</option></select></div>
+    <div><label for="fDisc">Disciplina</label><select id="fDisc"></select></div>
+  </div>
+  <div id="lessonList"></div>
+</section>
+
+<!-- GERADOR -->
+<section id="gerador" class="view">
+  <div class="noprint">
+    <h2>Gerador de trabalhos escolares</h2>
+    <p>Preenche os dados e recebe um trabalho com capa, índice, introdução, objectivos, desenvolvimento, conclusão e bibliografia, no formato usado nas escolas angolanas.</p>
+    <div class="note">É um texto-base. Lê, adapta com as tuas palavras e acrescenta as fontes que consultaste: o trabalho só vale a pena se o souberes defender. O índice sai sem números de página, que podes acrescentar no Word. Confirma sempre as referências legais antes de entregar.</div>
+    <div class="card">
+      <div class="grid2">
+        <div><label for="tipo">Tipo de trabalho</label>
+          <select id="tipo"><option value="pesquisa">Trabalho de pesquisa</option><option value="relatorio">Relatório de aula prática</option><option value="projecto">Mini-projecto</option></select></div>
+        <div><label for="tema">Tema</label><select id="tema"></select></div>
+        <div id="customWrap" class="span2 hide"><label for="custom">Escreve o teu tema</label><input id="custom" placeholder="Ex.: Computação em nuvem e as empresas angolanas"></div>
+        <div><label for="disc">Disciplina</label><input id="disc" list="discList" placeholder="Ex.: Redes de Computadores"><datalist id="discList"></datalist></div>
+        <div><label for="classe">Classe</label>
+          <select id="classe"><option>10.ª Classe</option><option selected>11.ª Classe</option><option>12.ª Classe</option><option>13.ª Classe</option><option>Ensino Superior</option></select></div>
+        <div><label for="curso">Curso</label><input id="curso" value="Técnico de Informática"></div>
+        <div><label for="turma">Turma</label><input id="turma" placeholder="Ex.: A (Manhã)"></div>
+        <div class="span2"><label for="escola">Nome da escola</label><input id="escola" placeholder="Nome completo da tua escola ou instituto"></div>
+        <div><label for="prov">Província</label><select id="prov"></select></div>
+        <div><label for="mun">Município (opcional)</label><input id="mun" placeholder="Ex.: Viana"></div>
+        <div class="span2"><label for="alunos">Integrantes (um nome por linha)</label><textarea id="alunos" placeholder="Nome Completo 1&#10;Nome Completo 2"></textarea></div>
+        <div><label for="prof">Professor(a)</label><input id="prof" placeholder="Nome do professor"></div>
+        <div><label for="ano">Ano lectivo</label><input id="ano" value="2026/2027"></div>
+        <div><label for="detalhe">Tamanho</label><select id="detalhe"><option value="completo">Completo</option><option value="curto">Resumido</option></select></div>
+        <div style="display:flex;align-items:end"><label style="display:flex;gap:8px;align-items:center;margin:0 0 10px;color:var(--ink)"><input type="checkbox" id="agrad" checked> Incluir agradecimentos</label></div>
+      </div>
+      <div id="genErr" class="err" role="alert"></div>
+      <div class="row-btns" style="margin-bottom:0">
+        <button class="btn" id="btnGerar">Gerar trabalho</button>
+        <button class="btn ghost" id="btnExemplo">Preencher exemplo</button>
+      </div>
+    </div>
+    <div id="toolbar" class="row-btns hide">
+      <button class="btn small" id="btnCopiar">Copiar texto</button>
+      <button class="btn small" id="btnImprimir">Imprimir / PDF</button>
+      <button class="btn small red" id="btnDoc">Descarregar .doc</button>
+      <span id="genMsg" style="align-self:center;color:var(--ok)"></span>
+    </div>
+  </div>
+  <div id="docOut"></div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz" class="view">
+  <h2>Quiz</h2>
+  <p>Rondas de até 10 perguntas. Cada resposta vem com explicação.</p>
+  <div class="card">
+    <div class="filters" style="margin:0 0 14px"><div style="flex:1;min-width:200px"><label for="qDisc">Disciplina</label><select id="qDisc"></select></div>
+    <div style="align-self:end"><button class="btn" id="btnQuiz">Começar</button></div></div>
+    <div id="qBox"></div>
+  </div>
+</section>
+
+<!-- FERRAMENTAS -->
+<section id="ferramentas" class="view">
+  <h2>Ferramentas</h2>
+  <div class="grid2">
+    <div class="card span2">
+      <h3>Conversor de bases</h3>
+      <div class="grid2">
+        <div><label for="cvVal">Número</label><input id="cvVal" placeholder="Ex.: 1101" autocomplete="off"></div>
+        <div><label for="cvBase">Está em base</label><select id="cvBase"><option value="2">Binário (2)</option><option value="10" selected>Decimal (10)</option><option value="8">Octal (8)</option><option value="16">Hexadecimal (16)</option></select></div>
+      </div>
+      <div class="row-btns" style="margin:12px 0"><button class="btn small" id="btnConv">Converter</button></div>
+      <div id="cvOut"></div>
+    </div>
+    <div class="card">
+      <h3>Gerador de palavras-passe</h3>
+      <label for="pwLen">Tamanho: <b id="pwLenV">16</b></label>
+      <input type="range" id="pwLen" min="8" max="32" value="16">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin:10px 0;font-size:.92rem">
+        <label style="margin:0;color:var(--ink)"><input type="checkbox" id="pwU" checked> A-Z</label>
+        <label style="margin:0;color:var(--ink)"><input type="checkbox" id="pwL" checked> a-z</label>
+        <label style="margin:0;color:var(--ink)"><input type="checkbox" id="pwN" checked> 0-9</label>
+        <label style="margin:0;color:var(--ink)"><input type="checkbox" id="pwS" checked> símbolos</label>
+      </div>
+      <div class="out" id="pwOut" aria-live="polite"></div>
+      <div class="row-btns" style="margin:0"><button class="btn small" id="btnPw">Gerar</button><button class="btn small ghost" id="btnPwCopy">Copiar</button></div>
+    </div>
+    <div class="card">
+      <h3>Testar a força de uma palavra-passe</h3>
+      <label for="pwTest">Escreve uma palavra-passe (fica só no teu aparelho)</label>
+      <input id="pwTest" autocomplete="off" placeholder="Ex.: luanda2024">
+      <div class="meter" style="margin-top:12px"><div id="pwFill"></div></div>
+      <p id="pwRes" style="margin-top:10px"></p>
+    </div>
+    <div class="card span2">
+      <h3>Contador de palavras</h3>
+      <label for="ctTxt">Cola o teu texto</label>
+      <textarea id="ctTxt"></textarea>
+      <p id="ctRes" style="margin:10px 0 0;color:var(--gold)">0 palavras · 0 caracteres · 0 páginas</p>
+    </div>
+  </div>
+</section>
+
+<!-- GLOSSÁRIO -->
+<section id="glossario" class="view">
+  <h2>Glossário</h2>
+  <label for="gSearch">Pesquisar termo</label>
+  <input id="gSearch" placeholder="Ex.: router, phishing, SQL">
+  <dl id="gList"></dl>
+</section>
+
+<!-- AGENDA -->
+<section id="agenda" class="view">
+  <h2>Agenda de estudo</h2>
+  <div class="card">
+    <div class="grid2">
+      <div class="span2"><label for="tTitle">Tarefa</label><input id="tTitle" placeholder="Ex.: Entregar trabalho de Redes"></div>
+      <div><label for="tDisc">Disciplina</label><select id="tDisc"></select></div>
+      <div><label for="tDate">Data</label><input type="date" id="tDate"></div>
+    </div>
+    <div id="tErr" class="err" role="alert"></div>
+    <button class="btn" id="btnTask">Adicionar tarefa</button>
+  </div>
+  <div id="taskList" style="margin-top:16px"></div>
+</section>
+
+</main>
+<footer>Hacker Student · feito para estudantes de informática em Angola</footer>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
+/* ---------- Dados base ---------- */
+const DISC={TIC:"Tecnologias da Informação e Comunicação",SO:"Sistemas Operativos",Redes:"Redes de Computadores",Prog:"Programação",BD:"Bases de Dados",HW:"Hardware e Manutenção",Seg:"Segurança Informática",Web:"Desenvolvimento Web",Sup:"Ensino superior (ferramentas)"};
+const PROVS=["Bengo","Benguela","Bié","Cabinda","Cuando","Cubango","Cuanza Norte","Cuanza Sul","Cunene","Huambo","Huíla","Icolo e Bengo","Luanda","Lunda Norte","Lunda Sul","Malanje","Moxico","Moxico Leste","Namibe","Uíge","Zaire"];
+const MESES=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+
+/* ---------- Estado persistente ---------- */
+let S={done:{},tasks:[],best:{}};
+const Store={
+  async load(){
+    try{if(window.storage){const r=await window.storage.get('hs-state');if(r&&r.value)return JSON.parse(r.value)}}catch(e){}
+    try{const v=localStorage.getItem('hs-state');if(v)return JSON.parse(v)}catch(e){}
+    return null;
+  },
+  async save(){
+    const j=JSON.stringify(S);
+    try{if(window.storage){await window.storage.set('hs-state',j);return}}catch(e){}
+    try{localStorage.setItem('hs-state',j)}catch(e){}
+  }
+};
+
+/* ---------- Aulas ---------- */
+const LESSONS=[
+{id:"tic-info",d:"TIC",c:["10"],t:"O que é a informática",b:`<p>Informática é a ciência do tratamento automático da informação. Um sistema informático recebe <b>dados</b> (entrada), processa-os e produz <b>informação</b> (saída).</p><ul><li><b>Hardware</b>: a parte física (CPU, memória, disco, monitor).</li><li><b>Software</b>: os programas (sistema operativo e aplicações).</li><li><b>Peopleware</b>: as pessoas que usam e mantêm o sistema.</li></ul><p><b>Exemplo:</b> na secretaria, as notas dos alunos (dados) são processadas para gerar a pauta (informação).</p>`},
+{id:"tic-num",d:"TIC",c:["10","11"],t:"Sistemas de numeração",b:`<p>O computador trabalha em <b>binário</b> (base 2: só 0 e 1). Nós usamos o decimal (base 10). Há ainda o octal (base 8) e o hexadecimal (base 16).</p><p><b>Decimal → binário:</b> divide-se por 2 e lêem-se os restos de baixo para cima.</p><pre>13 ÷ 2 = 6  resto 1
+ 6 ÷ 2 = 3  resto 0
+ 3 ÷ 2 = 1  resto 1
+ 1 ÷ 2 = 0  resto 1
+13 (decimal) = 1101 (binário)</pre><p><b>Binário → decimal:</b> soma-se cada bit vezes a potência de 2 da sua posição.</p><pre>1101 = 1×8 + 1×4 + 0×2 + 1×1 = 13</pre><p>Treina na secção Ferramentas, no conversor de bases.</p>`},
+{id:"hw-comp",d:"HW",c:["10","11"],t:"Componentes do computador",b:`<table><tr><th>Componente</th><th>Função</th></tr><tr><td>CPU</td><td>Executa as instruções e faz os cálculos</td></tr><tr><td>RAM</td><td>Memória rápida e temporária (perde os dados ao desligar)</td></tr><tr><td>Disco (HDD/SSD)</td><td>Guarda ficheiros de forma permanente</td></tr><tr><td>Placa-mãe</td><td>Liga todos os componentes</td></tr><tr><td>Fonte de alimentação</td><td>Converte a energia da tomada para o computador</td></tr></table><p><b>Dica:</b> o SSD é mais rápido e resistente a pancadas do que o HDD.</p>`},
+{id:"hw-manut",d:"HW",c:["11","12"],t:"Manutenção básica de computadores",b:`<p>A <b>manutenção preventiva</b> evita avarias. Em Angola, a poeira, o calor e as oscilações de energia são os maiores inimigos do computador.</p><ul><li>Limpar o pó com pincel macio ou ar comprimido (com o PC desligado e sem corrente).</li><li>Verificar se as ventoinhas rodam bem.</li><li>Usar estabilizador ou UPS para proteger dos cortes e picos de energia.</li><li>Actualizar o sistema, passar o antivírus e fazer backup.</li></ul><p>Na <b>manutenção correctiva</b> repara-se ou substitui-se a peça avariada.</p>`},
+{id:"so-func",d:"SO",c:["10","11"],t:"O que faz um sistema operativo",b:`<p>O sistema operativo (SO) gere os recursos do equipamento e serve de ponte entre o utilizador e o hardware.</p><ul><li>Gestão de processos e de memória</li><li>Gestão de ficheiros e pastas</li><li>Gestão de dispositivos (teclado, impressora, rede)</li><li>Segurança e contas de utilizador</li></ul><p>Exemplos: Windows, Linux (Ubuntu), macOS, Android, iOS.</p>`},
+{id:"so-linux",d:"SO",c:["11","12"],t:"Comandos básicos de Linux",b:`<pre>pwd              mostra a pasta actual
+ls               lista ficheiros
+cd pasta         entra numa pasta
+mkdir turma11    cria uma pasta
+touch nota.txt   cria um ficheiro vazio
+cp a.txt b.txt   copia
+mv a.txt pasta/  move ou renomeia
+rm a.txt         apaga (sem reciclagem!)
+cat nota.txt     mostra o conteúdo
+sudo comando     executa como administrador</pre><p>Cuidado com o <b>rm</b> e o <b>sudo</b>: não há "desfazer".</p>`},
+{id:"redes-osi",d:"Redes",c:["11","12"],t:"Modelos OSI e TCP/IP",b:`<table><tr><th>Camada OSI</th><th>Exemplo</th></tr><tr><td>7 Aplicação</td><td>HTTP, e-mail</td></tr><tr><td>6 Apresentação</td><td>Formatos, cifragem</td></tr><tr><td>5 Sessão</td><td>Controlo de sessões</td></tr><tr><td>4 Transporte</td><td>TCP, UDP</td></tr><tr><td>3 Rede</td><td>IP, routers</td></tr><tr><td>2 Ligação de dados</td><td>Ethernet, switches</td></tr><tr><td>1 Física</td><td>Cabos, sinais, Wi-Fi</td></tr></table><p>O modelo <b>TCP/IP</b> tem 4 camadas: acesso à rede, internet, transporte e aplicação.</p>`},
+{id:"redes-ip",d:"Redes",c:["11","12","13"],t:"Endereçamento IPv4 e máscaras",b:`<p>Um endereço IPv4 tem 32 bits, escritos em 4 números de 0 a 255, por exemplo <b>192.168.1.10</b>. A máscara indica qual a parte da rede e qual a parte do equipamento.</p><ul><li>Intervalos privados: 10.0.0.0/8, 172.16.0.0/12 e 192.168.0.0/16.</li><li><b>/24</b> = máscara 255.255.255.0 = 254 equipamentos úteis.</li><li><b>Gateway</b>: o router por onde o tráfego sai para a Internet.</li><li><b>DHCP</b> atribui IPs automaticamente.</li></ul><p>Teste básico: <code>ping 192.168.1.1</code>.</p>`},
+{id:"prog-alg",d:"Prog",c:["10","11"],t:"Algoritmos e fluxogramas",b:`<p>Algoritmo é uma sequência finita de passos que resolve um problema. As três estruturas básicas são <b>sequência</b>, <b>decisão</b> (se/senão) e <b>repetição</b> (enquanto/para).</p><p>No fluxograma: oval = início/fim · rectângulo = processo · losango = decisão · paralelogramo = entrada/saída.</p><pre>INÍCIO
+  ler nota1, nota2, nota3
+  media = (nota1 + nota2 + nota3) / 3
+  SE media >= 10 ENTÃO escrever "Aprovado"
+  SENÃO escrever "Reprovado"
+FIM</pre>`},
+{id:"prog-py",d:"Prog",c:["11","12"],t:"Python: primeiros passos",b:`<pre>preco = 4500          # em Kz
+pago = 5000
+troco = pago - preco
+print("Troco:", troco, "Kz")
+
+n1 = float(input("Nota 1: "))
+n2 = float(input("Nota 2: "))
+n3 = float(input("Nota 3: "))
+media = (n1 + n2 + n3) / 3
+
+if media >= 10:
+    print("Aprovado com", round(media, 1))
+else:
+    print("Reprovado com", round(media, 1))
+
+for i in range(1, 6):
+    print("Linha", i)</pre><p>Notas: em Angola a nota mínima positiva é 10 (escala 0 a 20). A indentação em Python faz parte da sintaxe.</p>`},
+{id:"web-html",d:"Web",c:["12","13"],t:"HTML e CSS: a tua primeira página",b:`<pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="pt"&gt;
+&lt;head&gt;
+  &lt;meta charset="utf-8"&gt;
+  &lt;title&gt;A minha escola&lt;/title&gt;
+  &lt;style&gt;
+    body { font-family: Arial; background: #f4f4f4; }
+    h1   { color: #ce1126; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;Bem-vindo&lt;/h1&gt;
+  &lt;p&gt;Esta é a minha primeira página.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre><p>O <b>HTML</b> define a estrutura, o <b>CSS</b> o aspecto e o <b>JavaScript</b> o comportamento. Guarda como <code>index.html</code> e abre no navegador.</p>`},
+{id:"bd-rel",d:"BD",c:["12","13"],t:"Modelo relacional e chaves",b:`<p>Numa base de dados relacional os dados ficam em <b>tabelas</b> (linhas = registos, colunas = campos).</p><ul><li><b>Chave primária (PK)</b>: identifica cada registo de forma única, por exemplo <i>id_aluno</i>.</li><li><b>Chave estrangeira (FK)</b>: liga uma tabela a outra, por exemplo <i>id_turma</i> em ALUNO.</li></ul><table><tr><th>ALUNO</th><th>TURMA</th></tr><tr><td>id_aluno (PK)<br>nome<br>id_turma (FK)</td><td>id_turma (PK)<br>nome<br>classe</td></tr></table><p>Relação: uma turma tem muitos alunos (1:N).</p>`},
+{id:"bd-sql",d:"BD",c:["12","13","S"],t:"SQL básico",b:`<pre>CREATE TABLE aluno (
+  id_aluno INT PRIMARY KEY,
+  nome VARCHAR(100),
+  id_turma INT
+);
+
+INSERT INTO aluno VALUES (1, 'Maria Joaquim', 3);
+SELECT nome FROM aluno WHERE id_turma = 3;
+UPDATE aluno SET id_turma = 4 WHERE id_aluno = 1;
+DELETE FROM aluno WHERE id_aluno = 1;
+
+SELECT a.nome, t.nome AS turma
+FROM aluno a
+JOIN turma t ON t.id_turma = a.id_turma;</pre><p>Regra de ouro: no <b>UPDATE</b> e no <b>DELETE</b>, usa sempre <b>WHERE</b>.</p>`},
+{id:"seg-etico",d:"Seg",c:["11","12","13","S"],t:"Segurança digital e hacking ético",b:`<p>A segurança da informação protege três coisas: <b>confidencialidade</b>, <b>integridade</b> e <b>disponibilidade</b>.</p><ul><li><b>Phishing</b>: mensagem ou página falsa que tenta roubar os teus dados.</li><li><b>Engenharia social</b>: enganar a pessoa, não a máquina.</li><li><b>Ransomware</b>: bloqueia ficheiros e pede dinheiro.</li></ul><p>O <b>hacker ético</b> testa sistemas <u>com autorização</u> do dono para corrigir falhas. Entrar num sistema sem autorização é crime. Pratica só em máquinas tuas ou em laboratórios criados para isso.</p><p>Para começar: redes, Linux, programação e muita curiosidade.</p>`},
+{id:"seg-pass",d:"Seg",c:["10","11","12","13"],t:"Palavras-passe fortes e verificação em dois passos",b:`<ul><li>Usa 12 ou mais caracteres, misturando letras, números e símbolos, ou uma frase longa.</li><li>Uma palavra-passe diferente para cada serviço.</li><li>Nunca uses nome, data de nascimento ou "123456".</li><li>Activa a <b>verificação em dois passos (2FA)</b> no WhatsApp, e-mail e redes sociais.</li><li>Nunca partilhes códigos recebidos por SMS, nem o PIN do cartão.</li></ul><p><b>Sinais de burla:</b> urgência, prémios inesperados, pedido de código, ligações encurtadas ou estranhas. Em caso de dúvida, contacta a entidade pelos canais oficiais.</p>`},
+{id:"sup-bigo",d:"Sup",c:["S"],t:"Complexidade de algoritmos (Big O)",b:`<p>A notação Big O descreve como o tempo de execução cresce com o tamanho <i>n</i> da entrada.</p><table><tr><th>Notação</th><th>Exemplo</th></tr><tr><td>O(1)</td><td>Aceder a um elemento de um vector por índice</td></tr><tr><td>O(log n)</td><td>Pesquisa binária</td></tr><tr><td>O(n)</td><td>Pesquisa sequencial</td></tr><tr><td>O(n log n)</td><td>Merge sort</td></tr><tr><td>O(n²)</td><td>Bubble sort</td></tr></table>`},
+{id:"sup-git",d:"Sup",c:["S","13"],t:"Git: controlo de versões",b:`<pre>git init                    cria o repositório
+git add .                    prepara os ficheiros
+git commit -m "primeira versão"
+git branch funcionalidade    cria um ramo
+git switch funcionalidade    muda de ramo
+git log --oneline            histórico</pre><p>O Git permite voltar atrás, trabalhar em equipa e publicar o código em plataformas como o GitHub.</p>`}
+];
+
+/* ---------- Quiz ---------- */
+const QUIZ=[
+["TIC","Quanto é 1010 (binário) em decimal?",["8","10","12","5"],1,"8 + 0 + 2 + 0 = 10."],
+["TIC","Quantos bytes tem 1 Kilobyte (KB)?",["100","1000","1024","1204"],2,"Na informática, 1 KB = 1024 bytes."],
+["TIC","Qual destes dispositivos é de saída?",["Teclado","Rato","Monitor","Scanner"],2,"O monitor mostra a informação. Teclado, rato e scanner são de entrada."],
+["SO","Qual comando Linux lista os ficheiros de uma pasta?",["ls","cd","rm","cat"],0,"ls (list). cd muda de pasta, rm apaga e cat mostra o conteúdo."],
+["SO","Qual destes NÃO é um sistema operativo?",["Android","Linux","Google Chrome","Windows"],2,"O Chrome é um navegador, é um programa que corre sobre o sistema operativo."],
+["SO","Qual é a função principal do sistema operativo?",["Gerir os recursos do equipamento","Apenas navegar na Internet","Fazer impressões","Guardar fotografias"],0,"Gere processos, memória, ficheiros e dispositivos."],
+["Redes","Quantas camadas tem o modelo OSI?",["4","5","7","9"],2,"Física, ligação de dados, rede, transporte, sessão, apresentação e aplicação."],
+["Redes","Qual destes endereços IP é privado?",["8.8.8.8","192.168.1.10","1.1.1.1","200.10.10.1"],1,"192.168.0.0/16 é um intervalo reservado a redes privadas."],
+["Redes","A máscara /24 corresponde a:",["255.0.0.0","255.255.0.0","255.255.255.0","255.255.255.255"],2,"24 bits a 1 = 255.255.255.0."],
+["Redes","Qual protocolo protege a comunicação em páginas web?",["HTTP","HTTPS","FTP","SMTP"],1,"O HTTPS cifra a ligação entre o navegador e o servidor."],
+["Prog","Qual estrutura repete instruções?",["Sequência","Decisão","Repetição (ciclo)","Comentário"],2,"for e while são ciclos de repetição."],
+["Prog","Em Python, o que mostra print(2**3)?",["6","8","9","23"],1,"** é potência: 2 elevado a 3 = 8."],
+["Prog","O que é uma variável?",["Um espaço na memória com nome, que guarda um valor","Um tipo de cabo","Um erro do programa","Um comando do Windows"],0,"Dá-se um nome a um valor para o usar no programa."],
+["BD","Para que serve a chave primária?",["Identificar de forma única cada registo","Apagar tabelas","Ordenar alfabeticamente","Cifrar os dados"],0,"Não pode repetir-se nem ficar vazia."],
+["BD","Qual comando SQL consulta dados?",["INSERT","SELECT","DELETE","DROP"],1,"SELECT lê dados. INSERT acrescenta, DELETE apaga."],
+["BD","A chave estrangeira serve para:",["Ligar uma tabela a outra","Guardar imagens","Fazer backup","Criar utilizadores"],0,"Aponta para a chave primária de outra tabela."],
+["Seg","O que é phishing?",["Um tipo de vírus de hardware","Tentativa de enganar para roubar dados","Uma marca de antivírus","Um cabo de rede"],1,"Usa mensagens ou páginas falsas que imitam entidades de confiança."],
+["Seg","Um hacker ético é alguém que:",["Entra em contas alheias","Testa sistemas com autorização do dono","Vende palavras-passe","Cria vírus"],1,"A autorização é o que o separa do criminoso."],
+["Seg","O que é a verificação em dois passos (2FA)?",["Escrever a palavra-passe duas vezes","Uma segunda confirmação além da palavra-passe","Ter duas contas","Um tipo de antivírus"],1,"Mesmo que roubem a palavra-passe, falta o segundo factor."],
+["HW","Qual memória perde os dados quando o computador desliga?",["Disco rígido","SSD","RAM","Pen drive"],2,"A RAM é volátil."],
+["HW","O UPS (nobreak) protege contra:",["Vírus","Cortes e oscilações de energia","Poeira","Ecrãs partidos"],1,"Mantém o computador ligado por alguns minutos para guardares o trabalho."],
+["Web","Qual linguagem define o aspecto (cores, letras) de uma página?",["HTML","CSS","SQL","Python"],1,"HTML é a estrutura, CSS é o aspecto."]
+];
+
+/* ---------- Glossário ---------- */
+const GLOS=[
+["2FA","Verificação em dois passos: além da palavra-passe, pede um segundo código."],
+["Algoritmo","Sequência de passos para resolver um problema."],
+["Backup","Cópia de segurança dos ficheiros importantes."],
+["Bit","Menor unidade de informação: 0 ou 1."],
+["Byte","Conjunto de 8 bits."],
+["Cache","Memória rápida que guarda dados usados com frequência."],
+["Criptografia","Técnica para tornar uma mensagem ilegível a quem não tem a chave."],
+["CPU","Processador, o 'cérebro' do computador."],
+["Debug","Procurar e corrigir erros num programa."],
+["DHCP","Serviço que atribui endereços IP automaticamente."],
+["DNS","Sistema que traduz nomes de sites (exemplo.com) em endereços IP."],
+["Firewall","Barreira que filtra o tráfego de rede e bloqueia acessos indevidos."],
+["Hardware","Parte física do computador."],
+["HTTPS","Protocolo web com ligação cifrada."],
+["IP","Endereço que identifica um equipamento numa rede."],
+["LAN","Rede local, como a do laboratório de informática."],
+["Malware","Programa malicioso: vírus, trojan, ransomware."],
+["Nuvem (cloud)","Serviços e armazenamento acessíveis pela Internet."],
+["Open source","Software de código aberto, que pode ser estudado e alterado."],
+["Phishing","Burla que usa mensagens ou páginas falsas para roubar dados."],
+["Pixel","Menor ponto de uma imagem digital."],
+["Protocolo","Conjunto de regras de comunicação entre equipamentos."],
+["RAM","Memória temporária e rápida onde os programas correm."],
+["Ransomware","Malware que bloqueia ficheiros e exige pagamento."],
+["Router","Equipamento que liga redes diferentes, como a tua casa à Internet."],
+["SGBD","Sistema de Gestão de Bases de Dados (MySQL, PostgreSQL...)."],
+["Software","Programas e dados que fazem o hardware funcionar."],
+["SQL","Linguagem para consultar e gerir bases de dados."],
+["SSD","Disco de estado sólido, mais rápido que o HDD."],
+["Switch","Equipamento que liga os computadores de uma rede local."],
+["UPS","Fonte de energia de reserva (nobreak) para cortes de corrente."],
+["URL","Endereço de uma página na Internet."],
+["Variável","Espaço com nome onde um programa guarda um valor."],
+["VPN","Ligação cifrada que protege o tráfego em redes inseguras."],
+["Wi-Fi","Tecnologia de rede local sem fios."]
+];
+
+/* ---------- Biblioteca de temas do gerador ---------- */
+const SQLCODE=`CREATE TABLE aluno (
+  id_aluno INT PRIMARY KEY,
+  nome VARCHAR(100),
+  data_nascimento DATE,
+  id_turma INT
+);
+
+CREATE TABLE nota (
+  id_nota INT PRIMARY KEY,
+  id_aluno INT,
+  id_disciplina INT,
+  trimestre INT,
+  valor DECIMAL(4,1)   -- escala de 0 a 20
+);
+
+SELECT a.nome, d.nome AS disciplina, n.valor
+FROM nota n
+JOIN aluno a ON a.id_aluno = n.id_aluno
+JOIN disciplina d ON d.id_disciplina = n.id_disciplina
+WHERE n.trimestre = 1;`;
+const PYCODE=`# Exemplo 1: troco de uma compra em Kwanzas
+preco = 4500
+pago = 5000
+troco = pago - preco
+print("Troco:", troco, "Kz")
+
+# Exemplo 2: média de três notas (escala de 0 a 20)
+n1 = float(input("Nota 1: "))
+n2 = float(input("Nota 2: "))
+n3 = float(input("Nota 3: "))
+media = (n1 + n2 + n3) / 3
+
+if media >= 10:
+    print("Aprovado com", round(media, 1), "valores")
+else:
+    print("Reprovado com", round(media, 1), "valores")`;
+
+const THEMES={
+redes:{t:"Redes de computadores: conceitos, topologias e aplicação numa escola angolana",d:"Redes de Computadores",
+intro:["A informática está presente em quase todas as áreas da vida moderna e, sem redes de computadores, os equipamentos ficariam isolados, incapazes de partilhar ficheiros, impressoras e ligação à Internet. Em Angola, cada vez mais escolas, bancos, empresas e serviços públicos dependem de redes para funcionar.","O presente trabalho aborda os conceitos fundamentais das redes de computadores, a sua classificação, as principais topologias e os equipamentos utilizados, terminando com uma proposta de rede para o laboratório de informática da nossa escola, {escola}, em {local}."],
+obj:["Definir rede de computadores e explicar a sua importância;","Distinguir os tipos de rede (PAN, LAN, MAN e WAN);","Descrever as principais topologias e os respectivos equipamentos;","Apresentar uma proposta de rede para um laboratório de informática."],
+caps:[
+{h:"Conceito e importância das redes de computadores",p:["Uma rede de computadores é um conjunto de dois ou mais dispositivos interligados que trocam dados e partilham recursos, como ficheiros, impressoras e acesso à Internet. A ligação pode ser feita por cabo ou sem fios.","A sua importância é grande: reduz custos, porque vários computadores usam a mesma impressora ou o mesmo acesso à Internet, facilita o trabalho em grupo e permite centralizar a informação, como as pautas e os registos de uma secretaria escolar."]},
+{h:"Classificação das redes quanto à dimensão",p:["As redes PAN ligam dispositivos pessoais a curta distância, como o telemóvel e os auscultadores por Bluetooth. As redes LAN cobrem uma área pequena, como o laboratório de informática de uma escola ou o escritório de uma empresa.","As redes MAN cobrem uma cidade e as redes WAN ligam locais muito distantes, sendo a Internet o maior exemplo de WAN. Um banco com agências em várias províncias angolanas utiliza uma WAN para manter as contas dos clientes actualizadas."]},
+{h:"Topologias de rede",p:["A topologia descreve a forma como os dispositivos se ligam entre si. As principais são o barramento, o anel, a estrela e a malha. Na topologia em estrela, todos os computadores ligam-se a um equipamento central, normalmente um switch.","A estrela é a mais usada nas redes locais por ser fácil de instalar e de resolver avarias: se um cabo falha, só esse computador fica sem rede. A sua desvantagem é que, se o equipamento central falhar, toda a rede deixa de funcionar."],
+ tbl:[["Topologia","Vantagem","Desvantagem"],["Barramento","Poupa cabo","Uma falha no cabo principal pára a rede"],["Anel","Acesso organizado","Uma falha pode afectar todo o anel"],["Estrela","Fácil manutenção","Depende do switch"],["Malha","Muito fiável","Instalação cara e complexa"]]},
+{h:"Equipamentos e meios de transmissão",p:["Os principais equipamentos são a placa de rede, o switch, o router e o ponto de acesso (access point). O cabo mais comum nas redes locais é o par trançado UTP (categorias 5e ou 6), com conectores RJ-45; a fibra óptica é usada em longas distâncias e em ligações de grande velocidade.","As redes sem fios (Wi-Fi) são práticas, mas exigem palavra-passe forte e configuração de segurança para evitar que pessoas não autorizadas usem a ligação."]},
+{h:"Proposta de rede para o laboratório de informática",p:["Propõe-se uma rede local em estrela para o laboratório de informática da nossa escola, {escola}, em {local}, com um switch a ligar todos os computadores por cabo UTP e um router a fornecer acesso à Internet.","Sugere-se o endereçamento 192.168.1.0/24 com atribuição automática de IP (DHCP) e a instalação de UPS ou estabilizadores para proteger os equipamentos das oscilações e cortes de energia, um problema frequente na realidade angolana."]}],
+concl:["Concluiu-se que as redes de computadores são essenciais para a partilha de recursos e para a comunicação, e que a topologia em estrela é a mais adequada para ambientes escolares.","Para o contexto angolano, a estabilidade da energia eléctrica e a segurança da rede são factores tão importantes como o próprio equipamento, pelo que devem ser considerados em qualquer projecto de rede."],
+bib:["FOROUZAN, Behrouz A. Comunicação de Dados e Redes de Computadores. 4.ª ed. São Paulo: McGraw-Hill.","KUROSE, James F.; ROSS, Keith W. Redes de Computadores e a Internet: uma abordagem top-down. São Paulo: Pearson.","TANENBAUM, Andrew S.; WETHERALL, David. Redes de Computadores. 5.ª ed. São Paulo: Pearson."],
+mat:["Computadores do laboratório","Switch e router","Cabo UTP Cat5e e conectores RJ-45","Alicate de crimpagem e testador de cabos"],
+proc:["Identificar os equipamentos e o esquema da rede;","Preparar os cabos UTP e montar os conectores RJ-45;","Ligar os computadores ao switch e o switch ao router;","Configurar os endereços IP e testar a conectividade com o comando ping."]},
+
+seguranca:{t:"Segurança informática: burlas digitais e protecção de dados em Angola",d:"Segurança Informática",
+intro:["Com o aumento do uso de telemóveis, redes sociais e serviços bancários digitais, cresceram também as burlas e os ataques informáticos. Hoje, proteger as contas e os dados pessoais é tão importante como proteger a casa.","Este trabalho apresenta os conceitos básicos de segurança informática, as ameaças mais comuns que afectam os utilizadores angolanos, as boas práticas de protecção e o enquadramento legal sobre a protecção de dados, e foi elaborado por alunos da escola {escola}, em {local}."],
+obj:["Explicar os princípios da segurança da informação;","Identificar ameaças como vírus, phishing e engenharia social;","Apresentar boas práticas de protecção de contas e dispositivos;","Conhecer o enquadramento legal da protecção de dados em Angola."],
+caps:[
+{h:"Princípios da segurança da informação",p:["A segurança da informação assenta em três princípios: a confidencialidade (só quem tem autorização acede à informação), a integridade (a informação não é alterada indevidamente) e a disponibilidade (a informação está acessível quando é necessária).","Estes princípios aplicam-se a um ficheiro no computador, a uma conta de rede social ou ao sistema de um banco."]},
+{h:"Principais ameaças",p:["Entre as ameaças mais comuns estão os vírus e outros programas maliciosos (malware), o phishing, que consiste em mensagens ou páginas falsas que imitam entidades de confiança para roubar dados, e a engenharia social, que engana a pessoa em vez de atacar a máquina.","Na prática, muitos utilizadores recebem mensagens com falsos prémios, pedidos de códigos de verificação, ligações suspeitas por WhatsApp ou falsos pedidos de transferência. Quem partilha um código recebido por SMS pode perder o acesso à sua conta."]},
+{h:"Boas práticas de protecção",p:["Recomenda-se usar palavras-passe longas e diferentes para cada serviço, activar a verificação em dois passos, manter o sistema e as aplicações actualizados e instalar um antivírus fiável. Nunca se deve partilhar códigos de verificação nem o PIN do cartão.","Ao usar computadores públicos, como os de um cyber café, deve-se terminar sempre a sessão, evitar guardar palavras-passe no navegador e não fazer operações bancárias. É também importante fazer cópias de segurança (backup) dos ficheiros importantes."]},
+{h:"Enquadramento legal",p:["Em Angola, a Lei n.º 22/11, de 17 de Junho, regula a protecção de dados pessoais e prevê uma entidade de supervisão, a Agência de Protecção de Dados. A Lei n.º 23/11, de 20 de Junho, trata das comunicações electrónicas e dos serviços da sociedade da informação, e a Lei n.º 7/17, de 16 de Fevereiro, trata da protecção das redes e sistemas informáticos.","Estas leis reforçam o princípio de que os dados pessoais só devem ser recolhidos para fins legítimos e protegidos contra o uso indevido."]},
+{h:"Hacking ético",p:["O hacker ético é o profissional que testa a segurança de sistemas com autorização do dono, para encontrar falhas antes dos criminosos. É uma profissão reconhecida, ao contrário do acesso não autorizado, que é crime.","Um estudante que queira seguir esta área deve começar por aprender redes, sistemas operativos e programação, e praticar apenas em ambientes próprios ou de laboratório."]}],
+concl:["Concluiu-se que a segurança informática depende tanto da tecnologia como do comportamento das pessoas: a maior parte das burlas só resulta quando o utilizador partilha dados ou códigos.","Recomenda-se a educação digital nas escolas, o uso de palavras-passe fortes com verificação em dois passos e o conhecimento dos direitos de protecção de dados previstos na lei angolana."],
+bib:["STALLINGS, William. Criptografia e Segurança de Redes: princípios e práticas. 6.ª ed. São Paulo: Pearson.","ANGOLA. Lei n.º 22/11, de 17 de Junho — Lei da Protecção de Dados Pessoais. Luanda: Diário da República.","ANGOLA. Lei n.º 23/11, de 20 de Junho — Lei das Comunicações Electrónicas e dos Serviços da Sociedade da Informação.","ANGOLA. Lei n.º 7/17, de 16 de Fevereiro — Lei de Protecção das Redes e Sistemas Informáticos."],
+mat:["Computador com sistema operativo actualizado","Antivírus","Gestor de palavras-passe ou folha de testes","Ambiente de laboratório (máquina virtual)"],
+proc:["Analisar exemplos de mensagens de phishing e identificar sinais de fraude;","Criar uma palavra-passe forte e avaliar a sua robustez;","Activar a verificação em dois passos numa conta de teste;","Executar uma análise com antivírus e registar os resultados."]},
+
+internet:{t:"A Internet em Angola: infra-estruturas, acesso e desafios",d:"Tecnologias da Informação e Comunicação",
+intro:["A Internet tornou-se uma ferramenta essencial para estudar, trabalhar, comunicar e fazer negócios. Em Angola, o acesso tem vindo a crescer, mas ainda existem desigualdades entre as cidades e as zonas rurais.","Este trabalho analisa como a Internet chega ao país, quem a fornece, quais os principais desafios e que oportunidades existem para os jovens estudantes de {local}."],
+obj:["Explicar como a Internet chega a Angola;","Identificar os principais intervenientes do sector das telecomunicações;","Analisar os desafios do acesso à Internet;","Apresentar oportunidades e propostas para melhorar o acesso."],
+caps:[
+{h:"Como a Internet chega a Angola",p:["A maior parte do tráfego internacional chega por cabos submarinos de fibra óptica que ligam o continente a outras regiões do mundo. Angola tem pontos de aterragem destes cabos no litoral, entre os quais se contam o WACS, o SAT-3 e o SACS (South Atlantic Cable System), que liga Angola ao Brasil.","Em terra, a rede nacional de fibra óptica distribui a Internet pelas províncias e as operadoras levam o acesso aos utilizadores através de redes móveis e fixas."]},
+{h:"Operadoras e formas de acesso",p:["O acesso móvel é o mais comum e é fornecido por operadoras como a Unitel e a Africell, através de tecnologias 3G e 4G, estando a 5G em fase de implementação. Existem também ofertas de Internet fixa por fibra e por rádio.","O sector é regulado pelo INACOM, o Instituto Angolano das Comunicações, que supervisiona o cumprimento das regras e a qualidade dos serviços."]},
+{h:"Principais desafios",p:["Um dos maiores desafios é o custo dos pacotes de dados em relação ao rendimento de muitas famílias. Outros são a cobertura desigual fora das grandes cidades, as quebras de serviço e a instabilidade da energia eléctrica, que afecta antenas e equipamentos.","Há ainda o desafio da literacia digital: muitas pessoas têm telemóvel, mas não sabem usar a Internet para estudar, procurar emprego ou proteger-se de burlas."]},
+{h:"Oportunidades",p:["A Internet abre portas ao ensino à distância, ao comércio electrónico, aos serviços do Estado online e ao empreendedorismo jovem, como a venda de produtos pelas redes sociais e o desenvolvimento de aplicações.","Para quem estuda informática, o domínio da Internet e da programação é uma vantagem num mercado em que a procura por competências digitais tende a aumentar."]},
+{h:"Propostas dos alunos",p:["Como contributo, propomos a criação de pontos de acesso gratuitos e supervisionados em escolas e centros comunitários, a distribuição de conteúdos educativos para consulta offline e campanhas de sensibilização para o uso seguro da Internet.","Propomos ainda que os laboratórios de informática das escolas, como o da nossa escola, {escola}, funcionem também como espaços de formação digital para a comunidade."]}],
+concl:["Concluiu-se que a Internet em Angola depende de infra-estruturas cada vez mais robustas, mas que o custo, a cobertura, a energia e a literacia digital continuam a limitar o seu aproveitamento.","Superar estes desafios exige a colaboração entre o Estado, as operadoras, as escolas e a sociedade, de modo a que a Internet seja uma ferramenta de desenvolvimento para todos."],
+bib:["KUROSE, James F.; ROSS, Keith W. Redes de Computadores e a Internet: uma abordagem top-down. São Paulo: Pearson.","TANENBAUM, Andrew S.; WETHERALL, David. Redes de Computadores. 5.ª ed. São Paulo: Pearson.","INACOM — Instituto Angolano das Comunicações. Informação institucional sobre o sector das comunicações. Consultado em: {data}."],
+mat:["Computador ou telemóvel com acesso à Internet","Aplicação de teste de velocidade","Folha de registo de resultados"],
+proc:["Medir a velocidade de ligação em três momentos do dia;","Registar a operadora, o tipo de ligação e a estabilidade;","Comparar os resultados e calcular médias;","Interpretar os resultados à luz dos desafios do acesso."]},
+
+so:{t:"Sistemas operativos: Windows, Linux e Android no dia-a-dia do estudante angolano",d:"Sistemas Operativos",
+intro:["O sistema operativo é o programa principal de qualquer computador ou telemóvel: sem ele, o equipamento não consegue executar aplicações nem gerir os seus recursos. Os estudantes angolanos usam sobretudo o Windows nos computadores e o Android nos telemóveis, mas existem outras opções, como o Linux.","O presente trabalho descreve as funções de um sistema operativo, apresenta as características do Windows, do Linux e do Android e compara-os, tendo em conta a realidade das escolas e dos utilizadores em {local}."],
+obj:["Definir sistema operativo e descrever as suas funções;","Caracterizar o Windows, o Linux e o Android;","Comparar os três sistemas segundo critérios práticos;","Recomendar o sistema mais adequado a diferentes situações."],
+caps:[
+{h:"Conceito e funções",p:["O sistema operativo é o software que faz a ligação entre o utilizador, as aplicações e o hardware. As suas principais funções são gerir os processos em execução, a memória, os ficheiros e os dispositivos de entrada e saída.","Também garante a segurança e permite a interacção com o utilizador, através de uma interface gráfica ou de linha de comandos."]},
+{h:"Windows",p:["O Windows, da Microsoft, é o sistema mais usado em computadores de escritório e escolas, graças à sua interface simples e à vasta compatibilidade com programas. É um sistema comercial, pelo que exige licença.","Nas escolas, é importante usar licenças legais e mantê-lo actualizado, pois sistemas desactualizados ficam mais expostos a vírus."]},
+{h:"Linux",p:["O Linux é um sistema de código aberto e gratuito, com várias distribuições, como o Ubuntu e o Linux Mint. É estável, seguro e funciona bem em computadores mais antigos, o que o torna interessante para escolas com poucos recursos.","A sua desvantagem é que alguns programas comuns no Windows não têm versão equivalente, e a adaptação exige alguma aprendizagem."]},
+{h:"Android",p:["O Android, da Google, é baseado no Linux e é o sistema mais comum nos telemóveis. Permite instalar aplicações de várias lojas e personalizar bastante o aparelho.","É a principal porta de entrada para a Internet de muitos jovens angolanos, o que torna importante saber gerir permissões e instalar aplicações apenas de fontes fiáveis."]},
+{h:"Comparação entre os sistemas",p:["A tabela seguinte resume as diferenças principais entre os três sistemas."],
+ tbl:[["Critério","Windows","Linux","Android"],["Custo","Licença paga","Gratuito","Gratuito (incluído no aparelho)"],["Uso mais comum","Computadores","Servidores e PCs","Telemóveis e tablets"],["Requisitos","Médios a altos","Baixos a médios","Variam com o aparelho"],["Código","Fechado","Aberto","Parcialmente aberto"]]}],
+concl:["Concluiu-se que não existe um sistema operativo perfeito: o Windows destaca-se pela compatibilidade, o Linux pela liberdade e eficiência e o Android pela mobilidade.","Para as escolas com computadores mais antigos e orçamentos limitados, o Linux é uma alternativa a considerar, desde que haja formação para professores e alunos."],
+bib:["SILBERSCHATZ, Abraham; GALVIN, Peter B.; GAGNE, Greg. Fundamentos de Sistemas Operacionais. Rio de Janeiro: LTC.","TANENBAUM, Andrew S.; BOS, Herbert. Sistemas Operacionais Modernos. 4.ª ed. São Paulo: Pearson."],
+mat:["Computador com Windows","Máquina virtual ou live USB com Linux","Telemóvel Android"],
+proc:["Explorar a interface e o gestor de ficheiros de cada sistema;","Executar comandos básicos (ls, cd, mkdir) no Linux;","Comparar o uso de memória e de processos no gestor de tarefas;","Registar as diferenças observadas."]},
+
+bd:{t:"Base de dados para gestão de matrículas e notas de uma escola",d:"Bases de Dados",
+intro:["Em muitas escolas, as matrículas, as pautas e os registos de notas ainda são feitos em papel ou em folhas soltas, o que causa atrasos, erros e perda de informação. Uma base de dados permite guardar, organizar e consultar estes dados de forma rápida e segura.","Este trabalho apresenta os conceitos de base de dados e propõe um modelo simples para gerir alunos, turmas, disciplinas e notas na nossa escola, {escola}, em {local}."],
+obj:["Explicar os conceitos de base de dados, tabela, chave primária e chave estrangeira;","Identificar problemas da gestão manual de pautas;","Propor um modelo de dados para matrículas e notas;","Apresentar exemplos de comandos SQL."],
+caps:[
+{h:"Conceitos fundamentais",p:["Uma base de dados é um conjunto organizado de dados relacionados, gerido por um Sistema de Gestão de Bases de Dados (SGBD), como o MySQL, o PostgreSQL, o SQLite ou o Microsoft Access.","Num modelo relacional, os dados ficam em tabelas formadas por linhas (registos) e colunas (campos). A chave primária identifica cada registo de forma única e a chave estrangeira liga uma tabela a outra."]},
+{h:"O problema da gestão manual",p:["A elaboração manual de pautas e fichas de matrícula consome tempo e está sujeita a erros de escrita e de cálculo das médias. Encontrar o histórico de um aluno pode demorar dias se os papéis não estiverem bem arquivados.","Além disso, o papel perde-se, deteriora-se com a humidade e é difícil de partilhar entre a secretaria, a direcção pedagógica e os professores."]},
+{h:"Modelo de dados proposto",p:["Propõe-se um modelo com as tabelas ALUNO, TURMA, DISCIPLINA, PROFESSOR e NOTA. Cada aluno pertence a uma turma e cada nota liga um aluno a uma disciplina num determinado trimestre, com um valor de 0 a 20.","A nota mínima positiva é de 10 valores, pelo que o sistema pode calcular automaticamente a média trimestral e indicar se o aluno tem aproveitamento."]},
+{h:"Exemplos em SQL",p:["Os comandos seguintes mostram como criar as tabelas principais e como consultar as notas do primeiro trimestre."],code:SQLCODE},
+{h:"Vantagens da solução",p:["Com a base de dados, as pautas podem ser geradas em segundos, as médias são calculadas sem erros e o histórico do aluno fica disponível para consulta. A informação pode também ser copiada (backup), reduzindo o risco de perda.","Num contexto com cortes de energia, recomenda-se guardar com frequência e manter cópias de segurança em locais diferentes."]}],
+concl:["Concluiu-se que uma base de dados simples pode melhorar de forma significativa a organização das matrículas e das notas de uma escola, reduzindo erros e o tempo gasto na elaboração de pautas.","A implementação deve ser acompanhada de formação dos funcionários, de cópias de segurança regulares e de regras de acesso, para proteger os dados pessoais dos alunos."],
+bib:["ELMASRI, Ramez; NAVATHE, Shamkant B. Sistemas de Banco de Dados. 6.ª ed. São Paulo: Pearson.","DATE, C. J. Introdução a Sistemas de Bancos de Dados. Rio de Janeiro: Elsevier."],
+mat:["Computador com SGBD instalado (MySQL, SQLite ou Access)","Lista de alunos e disciplinas de teste","Editor de SQL"],
+proc:["Desenhar o diagrama entidade-relacionamento;","Criar as tabelas e definir as chaves;","Inserir registos de teste;","Executar consultas e verificar os resultados."]},
+
+hardware:{t:"Manutenção preventiva de computadores em ambiente angolano",d:"Hardware e Manutenção",
+intro:["Um computador bem cuidado dura mais anos, trabalha mais depressa e evita despesas. Em Angola, factores como o calor, a poeira e as oscilações de energia aceleram o desgaste dos equipamentos.","Este trabalho explica o que é a manutenção preventiva, os riscos mais comuns na nossa realidade e os procedimentos recomendados, e apresenta um plano de manutenção para o laboratório da escola {escola}, em {local}."],
+obj:["Distinguir manutenção preventiva de manutenção correctiva;","Identificar os factores de risco do ambiente local;","Descrever os procedimentos de limpeza e protecção;","Propor um plano de manutenção."],
+caps:[
+{h:"Manutenção preventiva e correctiva",p:["A manutenção preventiva é feita regularmente para evitar avarias, como limpar o equipamento e actualizar o software. A manutenção correctiva é realizada depois de a avaria ocorrer, para reparar ou substituir peças.","A preventiva custa menos e prolonga a vida útil dos computadores, sendo por isso a mais recomendada."]},
+{h:"Factores de risco",p:["Em muitas cidades angolanas, a poeira, sobretudo na época do cacimbo, o calor e a humidade entram nos equipamentos e entopem as ventoinhas, causando sobreaquecimento.","As quebras e oscilações de energia podem queimar fontes de alimentação e danificar discos, e a utilização de extensões de má qualidade aumenta o risco de curto-circuito."]},
+{h:"Procedimentos de manutenção",p:["Com o computador desligado e retirado da tomada, deve-se limpar o interior com um pincel macio ou ar comprimido, limpar as ventoinhas e verificar os cabos e encaixes. A massa térmica do processador deve ser substituída quando estiver seca.","No software, convém actualizar o sistema, remover programas inúteis, verificar a presença de vírus, desfragmentar os discos HDD (nunca os SSD) e fazer cópias de segurança."]},
+{h:"Protecção eléctrica",p:["O estabilizador regula a tensão, enquanto o UPS (nobreak) mantém o computador ligado por alguns minutos em caso de corte, permitindo guardar o trabalho e desligar correctamente.","Recomenda-se também uma boa ligação à terra e evitar ligar vários equipamentos pesados numa mesma extensão."]},
+{h:"Plano de manutenção proposto",p:["A tabela seguinte apresenta o plano proposto para o laboratório de informática."],
+ tbl:[["Tarefa","Frequência","Responsável"],["Limpeza externa e dos teclados","Semanal","Alunos / monitor"],["Análise de vírus e actualizações","Quinzenal","Professor de informática"],["Verificação de UPS e estabilizadores","Mensal","Técnico"],["Backup de ficheiros importantes","Mensal","Professor de informática"],["Limpeza interna e das ventoinhas","Trimestral","Técnico"]]}],
+concl:["Concluiu-se que a manutenção preventiva é a forma mais económica de manter os computadores a funcionar, sobretudo em ambientes com poeira, calor e instabilidade de energia.","A adopção de um plano simples, com tarefas e responsáveis definidos, pode aumentar a vida útil do equipamento do laboratório e reduzir os custos de reparação."],
+bib:["MONTEIRO, Mário A. Introdução à Organização de Computadores. 5.ª ed. Rio de Janeiro: LTC.","TANENBAUM, Andrew S.; AUSTIN, Todd. Organização Estruturada de Computadores. 6.ª ed. São Paulo: Pearson."],
+mat:["Computador para manutenção","Chaves de fendas e pulseira antiestática","Pincel, ar comprimido e álcool isopropílico","Massa térmica"],
+proc:["Desligar o computador e retirá-lo da tomada;","Abrir a caixa e limpar o pó com pincel e ar comprimido;","Verificar ventoinhas, cabos e módulos de memória;","Montar, ligar e testar o funcionamento."]},
+
+pagamentos:{t:"Pagamentos digitais em Angola: Multicaixa Express e carteiras móveis",d:"Tecnologias da Informação e Comunicação",
+intro:["Nos últimos anos, os pagamentos por cartão e por telemóvel têm substituído, em parte, o dinheiro físico em Angola. Esta mudança trouxe comodidade, mas também novos riscos.","O presente trabalho explica como funcionam os pagamentos digitais, apresenta os principais meios disponíveis e analisa as vantagens, os riscos e as formas de os utilizar com segurança, tendo como referência a realidade de {local}."],
+obj:["Definir pagamentos digitais;","Descrever o sistema Multicaixa e as carteiras móveis;","Analisar vantagens e riscos;","Apresentar recomendações de utilização segura."],
+caps:[
+{h:"Conceito de pagamento digital",p:["Pagamento digital é qualquer pagamento feito por meios electrónicos, como cartões, aplicações bancárias ou carteiras móveis, sem recurso a dinheiro em notas.","Estes sistemas dependem de redes de comunicação, servidores seguros e mecanismos de autenticação, como o PIN e os códigos de confirmação."]},
+{h:"O sistema Multicaixa",p:["A rede Multicaixa, gerida pela EMIS — Empresa Interbancária de Serviços, permite levantar dinheiro em caixas automáticos, pagar em Terminais de Pagamento Automático (TPA) e efectuar pagamentos por referência.","A aplicação Multicaixa Express permite fazer pagamentos e transferências através do telemóvel, o que reduz as deslocações e as filas."]},
+{h:"Carteiras móveis e outros meios",p:["Além dos cartões, existem soluções de dinheiro móvel e carteiras digitais, oferecidas por operadoras e instituições financeiras, que permitem guardar valor e fazer pagamentos a partir do telemóvel.","Estas soluções são importantes para a inclusão financeira, sobretudo para pessoas com dificuldades de acesso a agências bancárias."]},
+{h:"Vantagens e riscos",p:["As vantagens incluem rapidez, menos necessidade de andar com dinheiro, registo das operações e maior alcance para pequenos negócios. Os riscos incluem fraudes, roubo de PIN, falhas de rede e falta de literacia financeira e digital.","Para se proteger, o utilizador não deve partilhar o PIN nem códigos, deve confirmar sempre o valor e o destinatário e desconfiar de mensagens que prometem prémios."]},
+{h:"Recomendações",p:["Recomenda-se maior educação financeira e digital nas escolas, melhor cobertura de rede e o reforço da segurança dos sistemas. Os comerciantes devem ser incentivados a aceitar pagamentos digitais e os utilizadores a guardar e verificar os comprovativos."]}],
+concl:["Concluiu-se que os pagamentos digitais são uma ferramenta importante para a modernização da economia angolana, pela rapidez e pela segurança que podem oferecer.","O seu sucesso depende de redes estáveis, de sistemas seguros e, acima de tudo, de utilizadores informados que saibam proteger os seus dados."],
+bib:["BANCO NACIONAL DE ANGOLA. Informação institucional sobre sistemas de pagamentos. Consultado em: {data}.","EMIS — Empresa Interbancária de Serviços. Informação institucional sobre a rede Multicaixa. Consultado em: {data}."],
+mat:["Telemóvel com aplicação bancária de demonstração","Folha de inquérito","Calculadora"],
+proc:["Elaborar um pequeno inquérito sobre o uso de pagamentos digitais;","Aplicar o inquérito a colegas e familiares;","Registar e tabular as respostas;","Analisar os resultados em percentagem."]},
+
+ia:{t:"Inteligência Artificial e o futuro dos jovens angolanos",d:"Tecnologias da Informação e Comunicação",
+intro:["A Inteligência Artificial (IA) está a transformar a forma como estudamos, trabalhamos e comunicamos. Assistentes virtuais, tradutores automáticos e sistemas de recomendação já fazem parte do quotidiano de milhões de pessoas.","Este trabalho explica o que é a IA, apresenta exemplos práticos, discute possíveis aplicações em Angola e reflecte sobre os riscos e o uso responsável por parte dos estudantes."],
+obj:["Explicar o que é a Inteligência Artificial;","Apresentar exemplos de IA no dia-a-dia;","Discutir aplicações possíveis em Angola;","Reflectir sobre os riscos e o uso responsável."],
+caps:[
+{h:"O que é a Inteligência Artificial",p:["A IA é o ramo da informática que desenvolve sistemas capazes de realizar tarefas que normalmente exigem inteligência humana, como reconhecer voz, traduzir textos ou identificar imagens.","Uma das suas áreas mais importantes é a aprendizagem automática (machine learning), na qual o sistema aprende padrões a partir de grandes quantidades de dados."]},
+{h:"Exemplos no dia-a-dia",p:["Os tradutores automáticos, os assistentes de voz, os filtros de spam do correio electrónico, as recomendações de vídeos e o reconhecimento facial para desbloquear o telemóvel são exemplos de IA.","Muitos estudantes já usam ferramentas de IA para tirar dúvidas, resumir textos ou aprender programação."]},
+{h:"Aplicações possíveis em Angola",p:["Na agricultura, a IA pode ajudar a prever pragas e a melhorar as colheitas; na saúde, apoiar o diagnóstico e a gestão de hospitais; na educação, criar apoio personalizado aos alunos; e na banca, detectar fraudes.","Para que isto seja possível, é preciso investir em infra-estruturas, na formação de técnicos e em dados em português e nas línguas nacionais, como o umbundu, o kimbundu e o kikongo."]},
+{h:"Riscos e questões éticas",p:["A IA levanta preocupações como a desinformação (imagens e vídeos falsos), a violação da privacidade, o preconceito nos dados e o possível impacto em alguns empregos.","É por isso essencial que a sua utilização seja regulada e que os utilizadores saibam avaliar criticamente a informação recebida."]},
+{h:"Uso responsável pelo estudante",p:["A IA deve ser usada como ferramenta de apoio e não como substituto do estudo. O estudante deve verificar sempre as informações em fontes fiáveis, citar as fontes consultadas e fazer o trabalho com o seu próprio entendimento.","Quem domina os fundamentos, como a matemática, a lógica e a programação, está mais bem preparado para tirar proveito da IA e para a criar."]}],
+concl:["Concluiu-se que a Inteligência Artificial oferece grandes oportunidades, mas exige espírito crítico, ética e conhecimentos de base sólidos.","Os jovens angolanos que se prepararem desde já em informática, matemática e línguas estarão em melhor posição para participar na criação de soluções locais."],
+bib:["RUSSELL, Stuart; NORVIG, Peter. Inteligência Artificial. 3.ª ed. Rio de Janeiro: Elsevier."],
+mat:["Computador ou telemóvel com Internet","Ferramenta de IA gratuita para testes","Folha de registo"],
+proc:["Formular perguntas simples a uma ferramenta de IA;","Verificar as respostas em fontes fiáveis;","Registar acertos e erros encontrados;","Discutir as limitações observadas."]},
+
+prog:{t:"Lógica de programação e algoritmos: resolver problemas do quotidiano",d:"Programação",
+intro:["Programar é ensinar o computador a resolver problemas. Antes de escrever qualquer código, é preciso pensar na solução e descrevê-la em passos claros: é a isso que se chama algoritmo.","Este trabalho apresenta os conceitos de algoritmo, fluxograma e pseudocódigo, as estruturas básicas de programação e dois exemplos práticos com situações do quotidiano angolano, como o cálculo do troco em Kwanzas e da média de notas."],
+obj:["Definir algoritmo, fluxograma e pseudocódigo;","Descrever as estruturas básicas de programação;","Resolver problemas simples com um programa em Python;","Reconhecer a importância da lógica de programação."],
+caps:[
+{h:"Algoritmo",p:["Um algoritmo é uma sequência finita e ordenada de passos que resolve um problema. Uma receita de cozinha, o percurso de casa até à escola e o cálculo de uma média são exemplos de algoritmos.","Um bom algoritmo é claro, tem um início e um fim e produz sempre o resultado esperado."]},
+{h:"Fluxograma e pseudocódigo",p:["O fluxograma representa o algoritmo através de símbolos gráficos: o oval indica o início e o fim, o rectângulo indica um processo, o losango indica uma decisão e o paralelogramo indica a entrada ou a saída de dados.","O pseudocódigo descreve os passos numa linguagem próxima do português, sem seguir a sintaxe de uma linguagem específica, o que facilita a passagem para o código."]},
+{h:"Estruturas básicas de programação",p:["Todo o programa usa três estruturas: a sequência (instruções executadas por ordem), a selecção (escolha entre caminhos, com if/else) e a repetição (execução repetida de instruções, com for ou while).","Estas estruturas combinam-se para resolver problemas cada vez mais complexos."]},
+{h:"Exemplos práticos em Python",p:["O primeiro exemplo calcula o troco de uma compra em Kwanzas. O segundo calcula a média de três notas, numa escala de 0 a 20, e indica se o aluno teve aproveitamento, considerando 10 como nota mínima positiva."],code:PYCODE},
+{h:"Importância da lógica de programação",p:["A lógica de programação desenvolve o raciocínio e é a base de qualquer carreira em informática, do desenvolvimento web ao hacking ético. Em Angola, há procura de programadores nos sectores bancário, das telecomunicações e do comércio electrónico.","Aprender a programar também permite criar soluções locais para problemas locais."]}],
+concl:["Concluiu-se que a lógica de programação é a base para criar software e que a prática com problemas do quotidiano facilita a compreensão das estruturas fundamentais.","Recomenda-se que os alunos treinem regularmente, comecem por algoritmos simples e aumentem a dificuldade de forma gradual."],
+bib:["FORBELLONE, André Luiz V.; EBERSPÄCHER, Henri F. Lógica de Programação. 3.ª ed. São Paulo: Pearson Prentice Hall.","PYTHON SOFTWARE FOUNDATION. Documentação oficial do Python. Consultado em: {data}."],
+mat:["Computador com Python instalado","Editor de código","Papel para fluxogramas"],
+proc:["Definir o problema e as variáveis;","Desenhar o fluxograma e escrever o pseudocódigo;","Escrever o código em Python;","Testar com valores diferentes e corrigir os erros."]}
+};
+
+function genericTheme(tema,disc){
+  return {t:tema,d:disc,
+  intro:[`O tema "${tema}" é um assunto relevante na área de ${disc}. Num mundo cada vez mais digital, compreender este assunto ajuda os estudantes a acompanhar as mudanças tecnológicas e a preparar-se para o mercado de trabalho.`,`O presente trabalho apresenta os conceitos fundamentais, a importância e as aplicações do tema, relacionando-o com a realidade angolana, e foi elaborado por alunos da escola {escola}, em {local}.`],
+  obj:[`Definir os conceitos principais relacionados com o tema;`,`Explicar a sua importância e aplicações;`,`Relacionar o tema com a realidade angolana;`,`Apresentar vantagens, desvantagens e propostas.`],
+  caps:[
+   {h:"Conceitos fundamentais",p:[`Neste capítulo apresentam-se os conceitos principais necessários à compreensão do tema "${tema}", bem como a sua origem e evolução ao longo do tempo.`,`Compreender estes conceitos é o primeiro passo para analisar o tema e relacioná-lo com a prática.`]},
+   {h:"Importância e aplicações",p:[`O tema tem aplicações em várias áreas, como a educação, a banca, as telecomunicações, o comércio e a administração pública. A sua utilização permite poupar tempo, reduzir erros e melhorar a qualidade dos serviços.`,`Para o estudante de informática, dominar este assunto é uma mais-valia para a formação e para a carreira.`]},
+   {h:"O tema na realidade angolana",p:[`Em Angola, o desenvolvimento das tecnologias de informação e comunicação tem aumentado a importância deste tema em sectores como a educação, a banca, as telecomunicações e os serviços públicos.`,`No entanto, existem desafios, como o custo do acesso à Internet, a instabilidade da energia eléctrica e a necessidade de mais formação técnica.`]},
+   {h:"Vantagens e desvantagens",p:[`Entre as vantagens contam-se a eficiência, a rapidez e a possibilidade de automatizar tarefas. Entre as desvantagens estão os custos de implementação, a dependência da tecnologia e os riscos de segurança.`]},
+   {h:"Propostas e perspectivas",p:[`Propõe-se mais formação prática nas escolas, o incentivo à pesquisa e o uso responsável da tecnologia. As perspectivas futuras são positivas, desde que se invista em infra-estruturas e em capacitação.`]}],
+  concl:[`Concluiu-se que o tema "${tema}" é relevante para a formação em ${disc} e para o desenvolvimento do país, desde que seja aplicado de forma responsável e adaptada à nossa realidade.`,`Recomenda-se o aprofundamento do estudo, com exemplos práticos e pesquisa em fontes fiáveis.`],
+  bib:["[APELIDO, Nome. Título da obra. Edição. Local: Editora, ano.]","[APELIDO, Nome. Título da obra. Edição. Local: Editora, ano.]","[Nome do sítio. Título da página. Consultado em: {data}.]"],
+  mat:["Computador com acesso à Internet","Material de apoio da disciplina","Caderno ou ficha de registo"],
+  proc:["Pesquisar e seleccionar as fontes;","Organizar a informação por tópicos;","Aplicar o tema num exemplo prático;","Registar e analisar os resultados."]};
+}
+
+/* ---------- Navegação ---------- */
+function go(v){
+  document.querySelectorAll('.view').forEach(s=>s.classList.toggle('active',s.id===v));
+  document.querySelectorAll('#nav button').forEach(b=>{if(b.dataset.go===v)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+  window.scrollTo(0,0);
+}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-go]');if(t){e.preventDefault();go(t.dataset.go)}});
+
+/* ---------- Início: terminal e progresso ---------- */
+function termDemo(){
+  const el=$('#term');
+  const lines=['hacker@student:~$ gerar --tema "Redes de computadores" --classe 11','> a montar capa, índice e introdução...','> a juntar exemplos de Angola: operadoras, energia, escola','> trabalho pronto: copiar, imprimir ou descarregar (.doc) ✔'];
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){el.textContent=lines.join('\n');return}
+  let l=0,c=0;
+  (function tick(){
+    if(l>=lines.length)return;
+    c++;el.textContent=lines.slice(0,l).join('\n')+(l?'\n':'')+lines[l].slice(0,c);
+    if(c>=lines[l].length){l++;c=0;setTimeout(tick,l===1?500:350)}else setTimeout(tick,l===0?32:14);
+  })();
+}
+function updateProgress(){
+  const n=LESSONS.length,d=LESSONS.filter(x=>S.done[x.id]).length,p=Math.round(d/n*100);
+  $('#progTxt').textContent=`${d} de ${n} aulas concluídas`;
+  $('#progFill').style.width=p+'%';
+  $('#progBar').setAttribute('aria-valuenow',p);
+}
+
+/* ---------- Aulas ---------- */
+function fillDiscFilter(){
+  $('#fDisc').innerHTML='<option value="all">Todas</option>'+Object.entries(DISC).map(([k,v])=>`<option value="${k}">${esc(v)}</option>`).join('');
+}
+const CLASSE_LBL={"10":"10.ª","11":"11.ª","12":"12.ª","13":"13.ª","S":"Superior"};
+function renderLessons(){
+  const fc=$('#fClasse').value,fd=$('#fDisc').value;
+  const list=LESSONS.filter(l=>(fc==='all'||l.c.includes(fc))&&(fd==='all'||l.d===fd));
+  $('#lessonList').innerHTML=list.length?list.map(l=>`<details class="lesson ${S.done[l.id]?'done':''}" data-id="${l.id}"><summary><span><b>${esc(l.t)}</b><span class="tag">${esc(DISC[l.d])} · ${l.c.map(c=>CLASSE_LBL[c]).join(', ')}</span></span></summary><div class="body">${l.b}<button class="btn small ${S.done[l.id]?'ghost':''}" data-done="${l.id}">${S.done[l.id]?'Desmarcar':'Marcar como concluída'}</button></div></details>`).join(''):'<p>Nenhuma aula para este filtro.</p>';
+}
+$('#lessonList').addEventListener('click',e=>{
+  const b=e.target.closest('[data-done]');if(!b)return;
+  const id=b.dataset.done;S.done[id]=!S.done[id];Store.save();
+  const open=[...document.querySelectorAll('.lesson[open]')].map(x=>x.dataset.id);
+  renderLessons();
+  document.querySelectorAll('.lesson').forEach(x=>{if(open.includes(x.dataset.id))x.open=true});
+  updateProgress();
+});
+$('#fClasse').onchange=$('#fDisc').onchange=renderLessons;
+
+/* ---------- Gerador ---------- */
+function fillGerador(){
+  $('#tema').innerHTML=Object.entries(THEMES).map(([k,v])=>`<option value="${k}">${esc(v.t)}</option>`).join('')+'<option value="custom">Outro tema (escrever)</option>';
+  $('#prov').innerHTML=PROVS.map(p=>`<option ${p==='Luanda'?'selected':''}>${p}</option>`).join('');
+  $('#discList').innerHTML=Object.values(DISC).map(d=>`<option value="${esc(d)}">`).join('');
+  onTema();
+}
+function onTema(){
+  const k=$('#tema').value;
+  $('#customWrap').classList.toggle('hide',k!=='custom');
+  if(k!=='custom')$('#disc').value=THEMES[k].d;
+}
+$('#tema').onchange=onTema;
+$('#btnExemplo').onclick=()=>{
+  $('#escola').value='Instituto Politécnico de Exemplo';
+  $('#alunos').value='Maria Joaquim\nJoão Manuel';
+  $('#prof').value='Prof. António Silva';
+  $('#turma').value='A (Manhã)';
+  $('#mun').value='Viana';
+  $('#prov').value='Luanda';
+};
+function readForm(){
+  const g=id=>$('#'+id).value.trim();
+  return {tipo:g('tipo'),tema:g('tema'),custom:g('custom'),disc:g('disc'),classe:g('classe'),curso:g('curso'),turma:g('turma'),escola:g('escola'),prov:g('prov'),mun:g('mun'),alunos:g('alunos').split(/[\n;]+/).map(s=>s.trim()).filter(Boolean),prof:g('prof'),ano:g('ano'),detalhe:g('detalhe'),agrad:$('#agrad').checked};
+}
+function tblHtml(t){return '<table>'+t.map((r,i)=>'<tr>'+r.map(c=>i?`<td>${esc(c)}</td>`:`<th>${esc(c)}</th>`).join('')+'</tr>').join('')+'</table>'}
+function buildDoc(f){
+  const th=f.tema==='custom'?genericTheme(f.custom,f.disc):THEMES[f.tema];
+  const title=f.tema==='custom'?f.custom:th.t;
+  const hoje=new Date();
+  const dataHoje=`${hoje.getDate()} de ${MESES[hoje.getMonth()]} de ${hoje.getFullYear()}`;
+  const local=f.mun?`${f.mun}, província de ${f.prov}`:`província de ${f.prov}`;
+  const ctx={escola:f.escola,local,data:dataHoje,disciplina:f.disc,ano:f.ano};
+  const fill=s=>esc(s.replace(/\{(\w+)\}/g,(m,k)=>ctx[k]!==undefined?ctx[k]:m));
+  const paras=a=>a.map(p=>`<p>${fill(p)}</p>`).join('');
+  const resumido=f.detalhe==='curto';
+  const caps=resumido?th.caps.slice(0,3).map(c=>({...c,p:[c.p[0]]})):th.caps;
+  const tipoLbl={pesquisa:'TRABALHO DE PESQUISA',relatorio:'RELATÓRIO DE AULA PRÁTICA',projecto:'MINI-PROJECTO'}[f.tipo];
+  let n=0;const idx=[];
+  const sec=name=>{n++;idx.push({t:`${n}. ${name}`,s:0});return `<h2>${n}. ${esc(name)}</h2>`};
+  const sub=(i,h)=>{idx.push({t:`${n}.${i} ${h}`,s:1});return `<h3>${n}.${i} ${esc(h)}</h3>`};
+  const capsHtml=(onlyFirst)=>caps.map((c,i)=>sub(i+1,c.h)+paras(onlyFirst?[c.p[0]]:c.p)+(c.tbl?tblHtml(c.tbl):'')+(c.code&&!onlyFirst?`<pre>${esc(c.code)}</pre>`:'')).join('');
+  const intro=()=>sec('Introdução')+paras(th.intro);
+  const og=`Compreender o tema "${title}" e a sua aplicação na realidade angolana.`;
+  const objectivos=()=>sec('Objectivos')+`<h3>Objectivo geral</h3><p>${esc(og)}</p><h3>Objectivos específicos</h3><ul>${th.obj.map(o=>`<li>${esc(o)}</li>`).join('')}</ul>`;
+  const concl=()=>sec('Conclusão')+paras(th.concl);
+  const bibList=[...th.bib.map(b=>fill(b)),fill(`Material de apoio das aulas de ${f.disc}. ${f.escola}, ano lectivo ${f.ano}.`)].sort((a,b)=>a.localeCompare(b,'pt'));
+  const bib=`<h2>Bibliografia</h2>`+bibList.map(b=>`<p class="noind" style="text-indent:0;padding-left:1.25cm">${b}</p>`).join('');
+  let body='';
+  if(f.tipo==='pesquisa'){
+    body+=intro()+objectivos();
+    body+=sec('Metodologia')+`<p>${fill(`Para a realização do trabalho recorreu-se à pesquisa bibliográfica em livros da especialidade, legislação e fontes digitais, complementada com a observação do contexto da nossa escola e com os conhecimentos obtidos nas aulas de {disciplina}.`)}</p>`;
+    body+=sec('Desenvolvimento')+capsHtml(false);
+    body+=concl();
+  }else if(f.tipo==='relatorio'){
+    body+=intro()+objectivos();
+    body+=sec('Fundamentação teórica')+capsHtml(true);
+    body+=sec('Material utilizado')+`<ul>${th.mat.map(m=>`<li>${esc(m)}</li>`).join('')}</ul>`;
+    body+=sec('Procedimentos')+`<ol>${th.proc.map(m=>`<li>${esc(m)}</li>`).join('')}</ol>`;
+    body+=sec('Resultados obtidos')+`<p>Após a execução dos procedimentos descritos, verificou-se que os objectivos propostos foram alcançados, tendo sido possível observar na prática os conceitos estudados nas aulas de ${esc(f.disc)}. Os resultados foram registados e comparados com o que se esperava segundo a teoria.</p>`;
+    body+=sec('Dificuldades encontradas')+`<p>Durante a actividade, as principais dificuldades foram o tempo limitado da aula, o número reduzido de equipamentos disponíveis e as interrupções de energia eléctrica, que obrigaram a guardar o trabalho com frequência.</p>`;
+    body+=concl();
+  }else{
+    body+=intro();
+    body+=sec('Problema')+`<p>${esc(`Como aplicar, de forma prática, os conhecimentos sobre "${title}" para resolver uma necessidade concreta da nossa escola e da comunidade de ${local}?`)}</p>`;
+    body+=objectivos();
+    body+=sec('Justificação')+`<p>${esc(`A realização deste projecto justifica-se pela necessidade de ligar a teoria estudada na disciplina de ${f.disc} à prática, desenvolvendo competências úteis para o mercado de trabalho e contribuindo para melhorar a realidade da nossa escola.`)}</p>`;
+    body+=sec('Fundamentação teórica')+capsHtml(true);
+    body+=sec('Solução proposta')+`<h3>Recursos necessários</h3><ul>${th.mat.map(m=>`<li>${esc(m)}</li>`).join('')}</ul><h3>Etapas de execução</h3><ol>${th.proc.map(m=>`<li>${esc(m)}</li>`).join('')}</ol>`;
+    body+=sec('Cronograma')+tblHtml([["Semana","Actividade"],...th.proc.map((p,i)=>[`Semana ${i+1}`,p]),[`Semana ${th.proc.length+1}`,"Revisão, elaboração do relatório final e apresentação."]]);
+    body+=concl();
+  }
+  idx.push({t:'Bibliografia',s:0});
+  body+=bib;
+  const mes=`${MESES[hoje.getMonth()]} de ${hoje.getFullYear()}`;
+  const capa=`<div class="capa pg"><p class="c1">REPÚBLICA DE ANGOLA<br>MINISTÉRIO DA EDUCAÇÃO</p><p class="c2">${esc(f.escola.toUpperCase())}</p><p>${esc(f.curso)} — ${esc(f.classe)}${f.turma?' — Turma '+esc(f.turma):''}</p><p class="c4">${tipoLbl}</p><p class="c5">${esc(title.toUpperCase())}</p><div class="info"><p><b>Disciplina:</b> ${esc(f.disc)}</p>${f.alunos.length?`<p><b>Integrantes:</b></p><ol>${f.alunos.map(a=>`<li>${esc(a)}</li>`).join('')}</ol>`:''}${f.prof?`<p><b>Professor(a):</b> ${esc(f.prof)}</p>`:''}<p><b>Ano lectivo:</b> ${esc(f.ano)}</p></div><p class="c9">${esc(f.mun||f.prov)}, ${mes}</p></div>`;
+  const agr=f.agrad?`<div class="pg"><h2 class="centro">Agradecimentos</h2><p>${esc(`Agradecemos a Deus pela saúde e pela força para concluir este trabalho. Agradecemos ao professor${f.prof?' '+f.prof:''}, pela orientação, à direcção da escola, pelo apoio, e às nossas famílias, pelo incentivo ao longo do ano lectivo.`)}</p></div>`:'';
+  const indice=`<div class="pg idx"><h2 class="centro">Índice</h2>${idx.map(i=>`<p class="${i.s?'s':''}">${esc(i.t)}</p>`).join('')}</div>`;
+  return `<div class="sheet" id="sheet">${capa}${agr}${indice}${body}</div>`;
+}
+function validar(f){
+  if(f.tema==='custom'&&!f.custom)return 'Escreve o teu tema.';
+  if(!f.disc)return 'Indica a disciplina.';
+  if(!f.escola)return 'Escreve o nome da escola.';
+  if(!f.alunos.length)return 'Escreve pelo menos o nome de um integrante.';
+  return '';
+}
+function slug(s){return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,50)||'trabalho'}
+$('#btnGerar').onclick=()=>{
+  const f=readForm(),err=validar(f);
+  $('#genErr').textContent=err;$('#genMsg').textContent='';
+  if(err)return;
+  $('#docOut').innerHTML=buildDoc(f);
+  $('#toolbar').classList.remove('hide');
+  $('#docOut').scrollIntoView({behavior:'smooth',block:'start'});
+};
+function flash(m){$('#genMsg').textContent=m;setTimeout(()=>{$('#genMsg').textContent=''},2500)}
+$('#btnCopiar').onclick=async()=>{
+  const el=$('#sheet');if(!el)return;
+  const txt=el.innerText;
+  try{await navigator.clipboard.writeText(txt);flash('Texto copiado.')}
+  catch(e){const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);try{document.execCommand('copy');flash('Texto copiado.')}catch(x){flash('Selecciona e copia manualmente.')}s.removeAllRanges()}
+};
+$('#btnImprimir').onclick=()=>window.print();
+$('#btnDoc').onclick=()=>{
+  const el=$('#sheet');if(!el)return;
+  const css=`body{font-family:'Times New Roman',serif;font-size:12pt;line-height:1.5}h2{font-size:13pt;text-transform:uppercase}h3{font-size:12pt}p{text-align:justify;text-indent:1.25cm;margin:0 0 6pt}.capa p,.idx p,.noind{text-indent:0}.capa{text-align:center}.capa p{text-align:center}.capa .info p{text-align:left}.centro{text-align:center}.s{padding-left:1.2cm}table{border-collapse:collapse;width:100%}td,th{border:1px solid #000;padding:4px}pre{font-family:'Courier New',monospace;font-size:10pt;background:#f1f1f1;white-space:pre-wrap}.pg{page-break-after:always}`;
+  const html=`<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><head><meta charset="utf-8"><title>Trabalho</title><style>${css}@page{margin:2.5cm 2cm 2cm 3cm}</style></head><body>${el.innerHTML}</body></html>`;
+  const blob=new Blob(['\ufeff',html],{type:'application/msword'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=slug($('#tema').value==='custom'?$('#custom').value:THEMES[$('#tema').value].t)+'.doc';
+  document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1500);
+  flash('Ficheiro descarregado.');
+};
+
+/* ---------- Quiz ---------- */
+let Q={list:[],i:0,score:0,cur:null,locked:false,disc:'all'};
+function fillQuiz(){$('#qDisc').innerHTML='<option value="all">Todas</option>'+Object.entries(DISC).filter(([k])=>QUIZ.some(q=>q[0]===k)).map(([k,v])=>`<option value="${k}">${esc(v)}</option>`).join('')}
+function startQuiz(){
+  const d=$('#qDisc').value;
+  const pool=shuffle(QUIZ.filter(q=>d==='all'||q[0]===d)).slice(0,10);
+  Q={list:pool,i:0,score:0,cur:null,locked:false,disc:d};
+  renderQ();
+}
+function renderQ(){
+  const box=$('#qBox');
+  if(Q.i>=Q.list.length){
+    const pct=Math.round(Q.score/Q.list.length*100);
+    const best=Math.max(S.best[Q.disc]||0,pct);S.best[Q.disc]=best;Store.save();
+    const msg=pct>=80?'Excelente! Estás pronto para a prova.':pct>=50?'Bom resultado. Revê as aulas dos erros e tenta de novo.':'Volta às aulas, estuda com calma e repete o quiz.';
+    box.innerHTML=`<h3>${Q.score} de ${Q.list.length} certas (${pct}%)</h3><p>${msg}</p><p style="color:var(--mute)">Melhor resultado nesta disciplina: ${best}%</p><button class="btn" id="qAgain">Repetir</button>`;
+    $('#qAgain').onclick=startQuiz;return;
+  }
+  const q=Q.list[Q.i];
+  Q.cur=shuffle(q[2].map((t,k)=>({t,ok:k===q[3]})));Q.locked=false;
+  box.innerHTML=`<p style="color:var(--mute);margin-bottom:6px">Pergunta ${Q.i+1} de ${Q.list.length} · ${esc(DISC[q[0]])}</p><h3>${esc(q[1])}</h3>${Q.cur.map((o,k)=>`<button class="qopt" data-k="${k}">${esc(o.t)}</button>`).join('')}<div id="qFb"></div>`;
+}
+$('#qBox').addEventListener('click',e=>{
+  const b=e.target.closest('.qopt');if(!b||Q.locked)return;
+  Q.locked=true;const k=+b.dataset.k,q=Q.list[Q.i];
+  document.querySelectorAll('.qopt').forEach((x,i)=>{if(Q.cur[i].ok)x.classList.add('ok');else if(i===k)x.classList.add('bad')});
+  if(Q.cur[k].ok)Q.score++;
+  const last=Q.i===Q.list.length-1;
+  $('#qFb').innerHTML=`<div class="why"><b>${Q.cur[k].ok?'Certo.':'Errado.'}</b> ${esc(q[4])}</div><button class="btn" id="qNext">${last?'Ver resultado':'Seguinte'}</button>`;
+  $('#qNext').onclick=()=>{Q.i++;renderQ()};
+  $('#qNext').focus();
+});
+$('#btnQuiz').onclick=startQuiz;
+
+/* ---------- Ferramentas ---------- */
+function convert(){
+  const raw=$('#cvVal').value.trim().replace(/\s+/g,''),base=+$('#cvBase').value,out=$('#cvOut');
+  const re={2:/^[01]+$/,8:/^[0-7]+$/,10:/^[0-9]+$/,16:/^[0-9a-f]+$/i}[base];
+  if(!raw){out.innerHTML='<p class="err">Escreve um número.</p>';return}
+  if(!re.test(raw)){out.innerHTML=`<p class="err">"${esc(raw)}" não é válido na base ${base}.</p>`;return}
+  if(raw.length>13){out.innerHTML='<p class="err">Número demasiado grande (máx. 13 dígitos).</p>';return}
+  const n=parseInt(raw,base);
+  let steps='';
+  if(n>0&&n<65536){let x=n;const ls=[];while(x>0){ls.push(`${x} ÷ 2 = ${Math.floor(x/2)}  resto ${x%2}`);x=Math.floor(x/2)}steps=`<p style="margin:10px 0 4px"><b>Método das divisões por 2</b> (lê os restos de baixo para cima):</p><pre style="background:#0f0b0a;border-left:3px solid var(--gold);padding:10px;border-radius:6px;overflow-x:auto;font:.86rem/1.5 'Courier New',monospace;color:#f6e7b8">${ls.join('\n')}\n${n} = ${n.toString(2)} (binário)</pre>`}
+  out.innerHTML=`<div class="out">Binário: ${n.toString(2)}</div><div class="out">Octal: ${n.toString(8)}</div><div class="out">Decimal: ${n.toString(10)}</div><div class="out">Hexadecimal: ${n.toString(16).toUpperCase()}</div>${steps}`;
+}
+$('#btnConv').onclick=convert;
+$('#cvVal').addEventListener('keydown',e=>{if(e.key==='Enter')convert()});
+
+function genPw(){
+  const sets=[[$('#pwU'),'ABCDEFGHIJKLMNOPQRSTUVWXYZ'],[$('#pwL'),'abcdefghijklmnopqrstuvwxyz'],[$('#pwN'),'0123456789'],[$('#pwS'),'!@#$%&*?+-=_']].filter(s=>s[0].checked);
+  if(!sets.length){$('#pwOut').textContent='Escolhe pelo menos um tipo de carácter.';return}
+  const len=+$('#pwLen').value,all=sets.map(s=>s[1]).join('');
+  const rnd=m=>{const a=new Uint32Array(1),lim=Math.floor(4294967296/m)*m;do{crypto.getRandomValues(a)}while(a[0]>=lim);return a[0]%m};
+  let chars=sets.map(s=>s[1][rnd(s[1].length)]);
+  while(chars.length<len)chars.push(all[rnd(all.length)]);
+  chars=shuffle(chars).slice(0,len);
+  $('#pwOut').textContent=chars.join('');
+}
+$('#pwLen').oninput=()=>{$('#pwLenV').textContent=$('#pwLen').value};
+$('#btnPw').onclick=genPw;
+$('#btnPwCopy').onclick=async()=>{const t=$('#pwOut').textContent;if(!t)return;try{await navigator.clipboard.writeText(t);$('#btnPwCopy').textContent='Copiado';setTimeout(()=>$('#btnPwCopy').textContent='Copiar',1500)}catch(e){}};
+function testPw(){
+  const p=$('#pwTest').value;
+  if(!p){$('#pwFill').style.width='0';$('#pwRes').textContent='';return}
+  let pool=0;if(/[a-z]/.test(p))pool+=26;if(/[A-Z]/.test(p))pool+=26;if(/[0-9]/.test(p))pool+=10;if(/[^a-zA-Z0-9]/.test(p))pool+=20;
+  let bits=p.length*Math.log2(pool||1);
+  const comuns=['123456','password','qwerty','angola','luanda','abc123','senha','0000','1111','admin'];
+  const pen=comuns.some(c=>p.toLowerCase().includes(c));
+  if(pen)bits=Math.min(bits,30);
+  if(/^(.)\1+$/.test(p))bits=Math.min(bits,10);
+  const lvl=bits<40?['Fraca','var(--bad)',25]:bits<60?['Média','var(--gold)',55]:bits<80?['Forte','var(--ok)',80]:['Muito forte','var(--ok)',100];
+  $('#pwFill').style.width=lvl[2]+'%';$('#pwFill').style.background=lvl[1];$('#pwFill').style.height='100%';$('#pwFill').style.transition='width .3s';
+  $('#pwRes').innerHTML=`<b>${lvl[0]}</b> · cerca de ${Math.round(bits)} bits de entropia${pen?'. Contém um padrão muito comum, evita-o.':'.'}${p.length<12?' Usa 12 ou mais caracteres.':''}`;
+}
+$('#pwTest').oninput=testPw;
+$('#ctTxt').oninput=()=>{
+  const t=$('#ctTxt').value,w=(t.trim().match(/\S+/g)||[]).length;
+  $('#ctRes').textContent=`${w} palavras · ${t.length} caracteres · cerca de ${(w/300).toFixed(1)} páginas (espaçamento 1,5)`;
+};
+
+/* ---------- Glossário ---------- */
+function renderGlos(){
+  const q=$('#gSearch').value.trim().toLowerCase();
+  const list=GLOS.filter(g=>!q||g[0].toLowerCase().includes(q)||g[1].toLowerCase().includes(q)).sort((a,b)=>a[0].localeCompare(b[0],'pt'));
+  $('#gList').innerHTML=list.length?list.map(g=>`<dt>${esc(g[0])}</dt><dd>${esc(g[1])}</dd>`).join(''):'<p>Nenhum termo encontrado.</p>';
+}
+$('#gSearch').oninput=renderGlos;
+
+/* ---------- Agenda ---------- */
+function todayStr(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function fmtDate(s){if(!s)return 'sem data';const [y,m,d]=s.split('-');return `${d}/${m}/${y}`}
+function renderTasks(){
+  const L=[...S.tasks].sort((a,b)=>(a.done-b.done)||((a.date||'9999')>(b.date||'9999')?1:-1));
+  $('#taskList').innerHTML=L.length?L.map(t=>`<div class="item ${t.done?'done':''}"><label style="display:flex;gap:10px;align-items:center;margin:0;color:var(--ink);flex:1"><input type="checkbox" data-t="${t.id}" ${t.done?'checked':''}><span><span class="t">${esc(t.title)}</span><span class="tag">${esc(DISC[t.disc]||t.disc)} · ${fmtDate(t.date)} ${!t.done&&t.date&&t.date<todayStr()?'<span class="late">em atraso</span>':''}</span></span></label><button class="btn small ghost" data-del="${t.id}" aria-label="Apagar tarefa">Apagar</button></div>`).join(''):'<p style="color:var(--mute)">Ainda não tens tarefas. Adiciona a primeira entrega ou teste.</p>';
+}
+$('#btnTask').onclick=()=>{
+  const title=$('#tTitle').value.trim();
+  if(!title){$('#tErr').textContent='Escreve o nome da tarefa.';return}
+  $('#tErr').textContent='';
+  S.tasks.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,5),title,disc:$('#tDisc').value,date:$('#tDate').value,done:false});
+  Store.save();$('#tTitle').value='';renderTasks();
+};
+$('#taskList').addEventListener('click',e=>{
+  const c=e.target.closest('[data-t]'),d=e.target.closest('[data-del]');
+  if(c){const t=S.tasks.find(x=>x.id===c.dataset.t);if(t){t.done=c.checked;Store.save();renderTasks()}}
+  if(d){S.tasks=S.tasks.filter(x=>x.id!==d.dataset.del);Store.save();renderTasks()}
+});
+
+/* ---------- Arranque ---------- */
+(async function init(){
+  const saved=await Store.load();
+  if(saved)S={done:saved.done||{},tasks:saved.tasks||[],best:saved.best||{}};
+  $('#nAulas').textContent=LESSONS.length;$('#nQuiz').textContent=QUIZ.length;
+  $('#tDisc').innerHTML=Object.entries(DISC).map(([k,v])=>`<option value="${k}">${esc(v)}</option>`).join('');
+  fillDiscFilter();fillGerador();fillQuiz();renderLessons();renderGlos();renderTasks();updateProgress();genPw();
+  document.querySelector('#nav button[data-go="inicio"]').setAttribute('aria-current','page');
+  termDemo();
+})();
+</script>
+</body>
+</html>
